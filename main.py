@@ -12,5 +12,5 @@ bahan_bangunan = []  # Data bahan bangunan
 # load("file/bahan_bangunan.csv", bahan_bangunan)
 
 while True:
-            masukan = input(">>> "  )
+    masukan = input(">>> ")
 #   commands.run(masukan)
