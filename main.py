@@ -1,4 +1,5 @@
 import commands as cmd
+import globalvar as gv
 
 # File Utama
 while True:
@@ -6,3 +7,4 @@ while True:
     # cmd.kumpul()
     # cmd.bangun()
     # cmd.batchbangun()
+    # cmd.batchkumpul()
