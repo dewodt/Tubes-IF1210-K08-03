@@ -25,6 +25,9 @@ summoned_jin = [[] for i in range(NMaxJin)]
 summoned_jin[0] = ["jinp1, ngabs", "jin_pembangun"]
 summoned_jin[1] = ["jinp1, ngabs", "jin_pembangun"]
 summoned_jin[2] = ["jinp1, ngabs", "jin_pembangun"]
+summoned_jin[3] = ["jinp1, ngabs", "jin_pengumpul"]
+summoned_jin[4] = ["jinp1, ngabs", "jin_pengumpul"]
+summoned_jin[5] = ["jinp1, ngabs", "jin_pengumpul"]
 # [username, role]
 
 # Load Data

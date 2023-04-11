@@ -129,3 +129,38 @@ def batchbangun():
         print(
             "Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu."
         )
+
+
+def batchkumpul():
+    # Inisialisasi data awal.
+    init_count_jin_pengumpul = 0
+    for i in range(4):
+        if gv.summoned_jin[i]:
+            if gv.summoned_jin[i][1] == "jin_pengumpul":
+                print(gv.summoned_jin[i][1])
+                init_count_jin_pengumpul += 1
+    batch_pasir = 0
+    batch_batu = 0
+    batch_air = 0
+
+    # Looping n kali (n banyaknya jin).
+    for i in range(init_count_jin_pengumpul):
+        # Generate random number dari 0 sampai 5 untuk pasir, batu, dan air.
+        gen_pasir = randint(0, 5)
+        gen_batu = randint(0, 5)
+        gen_air = randint(0, 5)
+
+        # Perbarui jumlah terkumpul.
+        batch_pasir += gen_pasir
+        batch_batu += gen_batu
+        batch_air += gen_air
+
+    # Update data jumlah pasir, batu, dan air.
+    gv.bahan_bangunan[0][2] += gen_pasir
+    gv.bahan_bangunan[1][2] += gen_batu
+    gv.bahan_bangunan[2][2] += gen_air
+
+    # Cetak pesan.
+    print(
+        f"Jin menemukan total {batch_pasir} pasir, {batch_batu} batu, dan {batch_air} air."
+    )
