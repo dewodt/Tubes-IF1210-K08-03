@@ -1,7 +1,8 @@
-import commands
+import commands as cmd
 
 # File Utama
 while True:
     masukan = input(">>> ")
-    # commands.kumpul()
-    # commands.bangun()
+    # cmd.kumpul()
+    # cmd.bangun()
+    # cmd.batchbangun()
