@@ -42,3 +42,18 @@ def bangun():
     else:
         print("Bahan bangunan tidak mencukupi.")
         print("Candi tidak bisa dibangun!")
+
+
+def kumpul():
+    # Generate random number dari 0 sampai 5 untuk pasir, batu, dan air.
+    gen_pasir = randint(0, 5)
+    gen_batu = randint(0, 5)
+    gen_air = randint(0, 5)
+
+    # Update data jumlah pasir, batu, dan air.
+    gv.bahan_bangunan[0][2] += gen_pasir
+    gv.bahan_bangunan[1][2] += gen_batu
+    gv.bahan_bangunan[2][2] += gen_air
+
+    # Cetak pesan.
+    print(f"Jin menemukan {gen_pasir} pasir, {gen_batu} batu, dan {gen_air} air.")
