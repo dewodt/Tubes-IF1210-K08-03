@@ -8,7 +8,7 @@ def login_input():  # masukan input username dan password dari username
     return user_tuple  # return hasil input user
 
 
-def login_req(kondisi_login, user_input):  # digunakan untuk login
+def login_req(user_input):  # digunakan untuk login
     # input user
     username = user_input[0]
     password = user_input[1]
@@ -54,6 +54,6 @@ def periksa_login(kondisi_login):
         return False
 
 
-def logout_req(kondisi_login):  # return kondisi_login user ke False
+def logout_req():  # return kondisi_login user ke False
     kondisi_login = False
     return kondisi_login
