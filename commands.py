@@ -1,7 +1,7 @@
 from random import randint
 
 import globalvar as gv
-import utils
+import utils as ut
 
 
 def bangun():
@@ -16,10 +16,10 @@ def bangun():
         if gv.candi[i][0] != 0:
             init_count_candi += 1
 
-    # Generate random number dari 1 sampai 5 untuk pasir, batu, dan air.
-    gen_pasir = randint(1, 5)
-    gen_batu = randint(1, 5)
-    gen_air = randint(1, 5)
+    # Generate seed dari waktu
+    custom_seed = ut.TimeNow()
+    # Generate 3 bilangan random dengan algoritma LCG
+    gen_pasir, gen_batu, gen_air = ut.RandomLCG(1, 5, custom_seed)
 
     # Jika pasir, batu, dan air cukup.
     if init_pasir >= gen_pasir and init_batu >= gen_batu and init_air >= gen_air:
@@ -50,9 +50,10 @@ def bangun():
 
 def kumpul():
     # Generate random number dari 0 sampai 5 untuk pasir, batu, dan air.
-    gen_pasir = randint(0, 5)
-    gen_batu = randint(0, 5)
-    gen_air = randint(0, 5)
+    # Generate seed dari waktu
+    custom_seed = ut.TimeNow()
+    # Generate 3 bilangan random dengan algoritma LCG
+    gen_pasir, gen_batu, gen_air = ut.RandomLCG(0, 5, custom_seed)
 
     # Update data jumlah pasir, batu, dan air.
     gv.bahan_bangunan[0][2] += gen_pasir
@@ -78,8 +79,7 @@ def batchbangun():
     init_count_jin_pembangun = 0
     for i in range(4):
         if gv.summoned_jin[i]:
-            if gv.summoned_jin[i][1] == "jin_pembangun":
-                print(gv.summoned_jin[i][1])
+            if gv.summoned_jin[i][2] == "jin_pembangun":
                 init_count_jin_pembangun += 1
     batch_pasir = 0
     batch_batu = 0
@@ -88,26 +88,31 @@ def batchbangun():
     # Looping n kali (n banyaknya jin yang tersummon).
     for i in range(init_count_jin_pembangun):
         # Generate random number dari 0 sampai 5 untuk pasir, batu, dan air.
-        gen_pasir = randint(0, 5)
-        gen_batu = randint(0, 5)
-        gen_air = randint(0, 5)
+        # Generate seed dari waktu
+        custom_seed = ut.TimeNow() + i
+        # Generate 3 bilangan random dengan algoritma LCG
+        gen_pasir, gen_batu, gen_air = ut.RandomLCG(1, 5, custom_seed)
 
         # Perbarui jumlah terkumpul.
         batch_pasir += gen_pasir
         batch_batu += gen_batu
         batch_air += gen_air
 
-    # Jika pasir, batu, dan air cukup.
+    # Jika ada jin pembangun tersummon
     if init_count_jin_pembangun > 0:
+        print(
+            f"Mengerahkan {init_count_jin_pembangun} jin untuk membangun candi dengan total bahan {batch_pasir} pasir, {batch_batu} batu, dan {batch_air} air."
+        )
+        # Kasus bahan cukup
         if (
             init_pasir >= batch_pasir
             and init_batu >= batch_batu
             and init_air >= batch_air
         ):
             # Update data jumlah pasir, batu, dan air.
-            gv.bahan_bangunan[0][2] -= gen_pasir
-            gv.bahan_bangunan[1][2] -= gen_batu
-            gv.bahan_bangunan[2][2] -= gen_air
+            gv.bahan_bangunan[0][2] -= batch_pasir
+            gv.bahan_bangunan[1][2] -= batch_batu
+            gv.bahan_bangunan[2][2] -= batch_air
 
             # Update array candi.
             for i in range(
@@ -122,18 +127,22 @@ def batchbangun():
                 ]
 
             # Cetak pesan.
+            print(f"Jin berhasil membangun total {init_count_jin_pembangun} candi.")
+        else:  # Bahan tidak cukup
+            # Mencari jumlah kekurangan bahan
+            kurang_pasir = 0
+            kurang_batu = 0
+            kurang_air = 0
+            if init_pasir < batch_pasir:
+                kurang_pasir = batch_pasir - init_pasir
+            if init_batu < batch_batu:
+                kurang_batu = batch_batu - init_batu
+            if init_air < batch_air:
+                kurang_air = batch_air - init_air
             print(
-                f"Mengerahkan {init_count_jin_pembangun} jin untuk membangun candi dengan total bahan {batch_pasir} pasir, {batch_batu} batu, dan {batch_air} air."
+                f"Bangun gagal. Kurang {kurang_pasir} pasir, {kurang_batu} batu, dan {kurang_air} air."
             )
-            if init_sisa_candi - init_count_jin_pembangun > 0:
-                print(
-                    f"Sisa candi yang perlu dibangun: {init_sisa_candi-init_count_jin_pembangun}."
-                )
-            else:
-                print("Sisa candi yang perlu dibangun: 0.")
-        else:
-            print("Bahan bangunan tidak mencukupi.")
-            print("Candi tidak bisa dibangun!")
+            print("# Candi yang terbangun 0")
     else:
         print(
             "Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu."
@@ -145,34 +154,41 @@ def batchkumpul():
     init_count_jin_pengumpul = 0
     for i in range(4):
         if gv.summoned_jin[i]:
-            if gv.summoned_jin[i][1] == "jin_pengumpul":
-                print(gv.summoned_jin[i][1])
+            if gv.summoned_jin[i][2] == "jin_pengumpul":
                 init_count_jin_pengumpul += 1
     batch_pasir = 0
     batch_batu = 0
     batch_air = 0
 
-    # Looping n kali (n banyaknya jin).
-    for i in range(init_count_jin_pengumpul):
-        # Generate random number dari 0 sampai 5 untuk pasir, batu, dan air.
-        gen_pasir = randint(0, 5)
-        gen_batu = randint(0, 5)
-        gen_air = randint(0, 5)
+    # Kasus jin pengumpul ada yang tersummon
+    if init_count_jin_pengumpul > 0:
+        # Looping n kali (n banyaknya jin).
+        for i in range(init_count_jin_pengumpul):
+            # Generate random number dari 0 sampai 5 untuk pasir, batu, dan air.
+            # Generate seed dari waktu
+            custom_seed = ut.TimeNow() + i
+            # Generate 3 bilangan random dengan algoritma LCG
+            gen_pasir, gen_batu, gen_air = ut.RandomLCG(0, 5, custom_seed)
 
-        # Perbarui jumlah terkumpul.
-        batch_pasir += gen_pasir
-        batch_batu += gen_batu
-        batch_air += gen_air
+            # Perbarui jumlah terkumpul.
+            batch_pasir += gen_pasir
+            batch_batu += gen_batu
+            batch_air += gen_air
 
-    # Update data jumlah pasir, batu, dan air.
-    gv.bahan_bangunan[0][2] += gen_pasir
-    gv.bahan_bangunan[1][2] += gen_batu
-    gv.bahan_bangunan[2][2] += gen_air
+        # Update data jumlah pasir, batu, dan air.
+        gv.bahan_bangunan[0][2] += batch_pasir
+        gv.bahan_bangunan[1][2] += batch_batu
+        gv.bahan_bangunan[2][2] += batch_air
 
-    # Cetak pesan.
-    print(
-        f"Jin menemukan total {batch_pasir} pasir, {batch_batu} batu, dan {batch_air} air."
-    )
+        # Cetak pesan.
+        print(
+            f"Jin menemukan total {batch_pasir} pasir, {batch_batu} batu, dan {batch_air} air."
+        )
+    else:  # Kasus tidak ada jin pengumpul tersummon
+        # Cetak pesan
+        print(
+            "Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu."
+        )
 
 
 def laporanjin():

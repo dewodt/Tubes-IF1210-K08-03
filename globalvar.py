@@ -8,10 +8,16 @@ users = [
     ["Roro", "Gasukabondo", "roro_jonggrang"],
     ["jinp1", "ngabs", "jin_pembangun"],
     ["jinp2", "ngabs", "jin_pembangun"],
-    ["jinp3", "ngabs", "jin_pembangun"],
-    ["jinp4", "ngabs", "jin_pembangun"],
+    ["jinp3", "ngabs", "jin_pengumpul"],
+    ["jinp4", "ngabs", "jin_pengumpul"],
+    ["jinp5", "ngabs", "jin_pengumpul"],
+    ["jinp6", "ngabs", "jin_pengumpul"],
+    ["jinp7", "ngabs", "jin_pengumpul"],
+    ["jinp8", "ngabs", "jin_pembangun"],
+    ["jinp9", "ngabs", "jin_pembangun"],
+    ["jinp10", "ngabs", "jin_pembangun"],
 ]
-count_users = 6  # Update saat load CSV dan Nambah akun baru!
+count_users = 12  # Update saat load CSV dan Nambah akun baru!
 
 candi = [[0, "", 0, 0, 0] for i in range(NMaxCandi)]
 candi[0] = [1, "jinp1", 1, 2, 3]
@@ -29,13 +35,17 @@ bahan_bangunan = [
 
 logged_in_role = "bandung_bondowoso"
 
-summoned_jin = [["", ""] for i in range(NMaxJin)]
-summoned_jin[0] = ["jinp1, ngabs", "jin_pembangun"]
-summoned_jin[1] = ["jinp1, ngabs", "jin_pembangun"]
-summoned_jin[2] = ["jinp4, ngabs", "jin_pembangun"]
-summoned_jin[3] = ["jinp2, ngabs", "jin_pengumpul"]
-summoned_jin[4] = ["jinp3, ngabs", "jin_pengumpul"]
-summoned_jin[5] = ["jinp4, ngabs", "jin_pengumpul"]
+summoned_jin = [["", "", ""] for i in range(NMaxJin)]
+summoned_jin[0] = ["jinp1", "ngabs", "jin_pembangun"]
+summoned_jin[1] = ["jinp2", "ngabs", "jin_pembangun"]
+summoned_jin[2] = ["jinp3", "ngabs", "jin_pengumpul"]
+summoned_jin[3] = ["jinp4", "ngabs", "jin_pengumpul"]
+summoned_jin[4] = ["jinp5", "ngabs", "jin_pengumpul"]
+summoned_jin[5] = ["jinp6", "ngabs", "jin_pengumpul"]
+summoned_jin[6] = ["jinp7", "ngabs", "jin_pengumpul"]
+summoned_jin[7] = ["jinp8", "ngabs", "jin_pembangun"]
+summoned_jin[8] = ["jinp9", "ngabs", "jin_pembangun"]
+summoned_jin[9] = ["jinp10", "ngabs", "jin_pembangun"]
 # [username, role]
 
 # Load Data
