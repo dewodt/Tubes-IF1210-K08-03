@@ -9,8 +9,12 @@ def bangun():
     init_pasir = gv.bahan_bangunan[0][2]
     init_batu = gv.bahan_bangunan[1][2]
     init_air = gv.bahan_bangunan[2][2]
-    init_jin = gv.logged_in_user
-    init_count_candi = utils.lenArray(gv.candi, gv.NMaxCandi)
+    init_jin = gv.logged_in_role
+    # Hitung jumlah candi awal
+    init_count_candi = 0
+    for i in range(gv.NMaxCandi):
+        if gv.candi[i][0] != 0:
+            init_count_candi += 1
 
     # Generate random number dari 1 sampai 5 untuk pasir, batu, dan air.
     gen_pasir = randint(1, 5)
@@ -64,8 +68,13 @@ def batchbangun():
     init_pasir = gv.bahan_bangunan[0][2]
     init_batu = gv.bahan_bangunan[1][2]
     init_air = gv.bahan_bangunan[2][2]
-    init_count_candi = utils.lenArray(gv.candi, gv.NMaxCandi)
+    # Hitung jumlah candi awal
+    init_count_candi = 0
+    for i in range(gv.NMaxCandi):
+        if gv.candi[i][0] != 0:
+            init_count_candi += 1
     init_sisa_candi = 100 - init_count_candi
+    # Hitung jumlah jin pembangun
     init_count_jin_pembangun = 0
     for i in range(4):
         if gv.summoned_jin[i]:

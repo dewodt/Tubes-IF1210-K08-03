@@ -1,12 +1,3 @@
-def lenArray(array, NMax):
-    # Panjang dari array adalah banyaknya elemen yang tidak kosong / 0
-    count = 0
-    for i in range(NMax):
-        if array[i] != 0:
-            count += 1
-    return count
-
-
 def lcg(x, a, c, m):
     while True:
         x = (a * x + c) % m
