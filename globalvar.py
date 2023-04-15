@@ -1,3 +1,5 @@
+import datetime
+
 # Inisialisasi Global Variable
 # NOTE: BEBERAPA DATA DIBAWAH MASIH ASAL KARENA BLM DILOAD DGN CSV.
 NMaxCandi = 1000
@@ -17,7 +19,10 @@ users = [
     ["jinp9", "ngabs", "jin_pembangun"],
     ["jinp10", "ngabs", "jin_pembangun"],
 ]
-count_users = 12  # Update saat load CSV dan Nambah akun baru!
+count_users = 12  # Update saat load CSV dan Nambah akun baru!\
+
+# Simpan nilai awal (seed) untuk Random LCG dan menyimpan x ke n untuk perhitungan selanjutnya.
+xn = int(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
 
 candi = [[0, "", 0, 0, 0] for i in range(NMaxCandi)]
 candi[0] = [1, "jinp1", 1, 2, 3]
