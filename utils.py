@@ -1,25 +1,15 @@
-def lenArray(array, NMax):
-    # Panjang dari array adalah banyaknya elemen yang tidak kosong / 0
-    count = 0
-    for i in range(NMax):
-        if array[i] != 0:
-            count += 1
-    return count
+import globalvar as gv
 
 
-def lcg(x, a, c, m):
-    while True:
-        x = (a * x + c) % m
-        yield x
-
-
-def RandomGenerator(min, max, seed):
+# Menerima range min, max, dan seed dan mengembalikan 3 bilangan random
+def RandomLCG(min, max, seed):
     random_array = [0, 0, 0]
     a, c, m = 1103515245, 12345, 2**31 - 1
-    random_value = lcg(seed, a, c, m)
+    gv.xn = (a * seed + c) % m
 
     for i in range(3):
-        normalized_value = int(min + (max - min) * (next(random_value) / m))
+        normalized_value = int(min + (max - min + 1) * (gv.xn / m))
         random_array[i] = normalized_value
+        gv.xn = (a * gv.xn + c) % m
 
     return random_array
