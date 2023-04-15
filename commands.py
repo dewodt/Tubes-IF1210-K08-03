@@ -184,9 +184,9 @@ def laporanjin():
 
         # Cari Terajin dan Termalas
         nama_terajin = "-"
-        count_terajin = 0
+        count_terajin = -1
         nama_termalas = "-"
-        count_termalas = 0
+        count_termalas = gv.NMaxCandi + 1  # Jumlah candi maksimum
         for i in range(gv.count_users):
             if gv.users[i][2] == "jin_pembangun":
                 nama_now = gv.users[i][0]
@@ -229,3 +229,56 @@ def laporanjin():
         print(f"> Jumlah Pasir: {pasir_now} unit")
         print(f"> Jumlah Air: {air_now} unit")
         print(f"> Jumlah Batu: {batu_now} unit")
+
+
+def laporancandi():
+    # Kasus role logged in bukan bandung bondowoso
+    if gv.logged_in_role != "bandung_bondowoso":
+        print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso.")
+    else:
+        total_candi = 0
+        total_pasir = 0
+        total_batu = 0
+        total_air = 0
+        id_termahal = "-"
+        harga_termahal = -1
+        id_termurah = "-"
+        harga_termurah = 200000  # Pasir, batu, air maks 5 -> harga pasti < 200000
+        # Hitung total candi, material yang digunakan, dan cari candi termahal.
+        i = 0
+        while i < gv.NMaxCandi and gv.candi[i][0] != 0:
+            # Total candi
+            total_candi += 1
+
+            # Material total candi
+            total_pasir += gv.candi[i][2]
+            total_batu += gv.candi[i][3]
+            total_air += gv.candi[i][4]
+
+            # Candi termahal
+            id_now = gv.candi[i][0]
+            harga_now = (
+                10000 * gv.candi[i][2] + 15000 * gv.candi[i][3] + 7500 * gv.candi[i][4]
+            )
+
+            # Jika dua candi sama-sama termahal/termurah, keluarkan indeks terendah.
+            print(harga_now)
+            # Update termahal
+            if harga_now > harga_termahal:
+                harga_termahal = harga_now
+                id_termahal = id_now
+            # Update termurah
+            if harga_now < harga_termurah:
+                harga_termurah = harga_now
+                id_termurah = id_now
+
+            # Iterasi selanjutnya
+            i += 1
+
+        # Cetak pesan
+        print(f"> Total Candi: {total_candi}")
+        print(f"> Total Pasir yang digunakan: {total_pasir}")
+        print(f"> Total Batu yang digunakan: {total_batu}")
+        print(f"> Total Air yang digunakan: {total_air}")
+        print(f"> ID Candi Termahal: {id_termahal}")
+        print(f"> ID Candi Termurah: {id_termurah}")
