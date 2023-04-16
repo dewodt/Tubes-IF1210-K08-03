@@ -398,3 +398,69 @@ def load():
             read_csv(folder_load, "user.csv")
             read_csv(folder_load, "candi.csv")
             read_csv(folder_load, "bahan_bangunan.csv")
+
+
+def write_csv(folder_name, file_name):
+    message = ""
+    # Menuliskan array user menjadi string
+    if file_name == "user.csv":
+        for i in range(gv.NMaxUser):
+            if i == 0:
+                message += "username;password;role\n"
+            for j in range(3):
+                if gv.users[i][0] != "":
+                    message += str(gv.users[i][j])
+                    if j != 2:
+                        message += ";"
+                    else:
+                        if gv.users[i + 1][0] != "":
+                            message += "\n"
+    # Menuliskan array candi menjadi string
+    elif file_name == "candi.csv":
+        for i in range(gv.NMaxCandi):
+            if i == 0:
+                message += "id;pembuat;pasir;batu;air\n"
+            for j in range(5):
+                if gv.candi[i][1] != "":
+                    message += str(gv.candi[i][j])
+                    if j != 4:
+                        message += ";"
+                    else:
+                        if gv.candi[i + 1][1] != "":
+                            message += "\n"
+    # Menuliskan array bahan bangunan menjadi string
+    elif file_name == "bahan_bangunan.csv":
+        message += "nama;deskripsi;jumlah\n"
+        message += (
+            f"pasir;pasir adalah bahan untuk membuat semen;{gv.bahan_bangunan[0][2]}\n"
+        )
+        message += f"batu;batu adalah bahan untuk membuat tembok candi;{gv.bahan_bangunan[1][2]}\n"
+        message += (
+            f"air;air adalah bahan untuk mencairkan semen;{gv.bahan_bangunan[2][2]}"
+        )
+
+    # Menuliskan file
+    file = open(f"save/{folder_name}/{file_name}", "w")
+    file.write(message)
+    file.close()
+
+
+def save():
+    folder_save = input("Masukkan nama folder: ")
+    print("Saving...")
+
+    # Jika directory save tidak ada
+    if not os.path.exists("save"):
+        print("Membuat folder save...")
+        os.mkdir("save")
+
+    # Jika directory save/<nama_folder> tidak ada
+    if not os.path.exists(f"save/{folder_save}"):
+        print("Membuat folder save/17-03-2023...")
+        os.mkdir(f"save/{folder_save}")
+
+    # Write file
+    write_csv(folder_save, "user.csv")
+    write_csv(folder_save, "candi.csv")
+    write_csv(folder_save, "bahan_bangunan.csv")
+    print(f"Berhasil menyimpan data di folder save/{folder_save}!")
