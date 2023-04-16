@@ -1,5 +1,4 @@
 import carirole as rf
-
 import commands as cmd
 import globalvar as gv
 import help as hf
