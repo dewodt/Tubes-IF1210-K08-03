@@ -14,11 +14,11 @@ xn = int(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
 
 # Inisialisasi sebelum baca CSV dan menyimpan data yang dibaca nantinya
 users = [["", "", ""] for i in range(NMaxUser)]
-candi = [["", "", "", "", ""] for i in range(NMaxCandi)]
+candi = [[0, "", 0, 0, 0] for i in range(NMaxCandi)]
 bahan_bangunan = [
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""],
+    ["", "", 0],
+    ["", "", 0],
+    ["", "", 0],
 ]
 
 # Menyimpan data jin yang telah tersummon

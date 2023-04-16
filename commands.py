@@ -71,7 +71,7 @@ def kumpul():
 def batchbangun():
     # Kasus role logged in bukan bandung bondowoso
     if gv.logged_in_role != "bandung_bondowoso":
-        print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso.")
+        print("Batch bangun hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
         # Inisialisasi data awal.
         init_pasir = gv.bahan_bangunan[0][2]
@@ -164,42 +164,48 @@ def batchbangun():
 
 
 def batchkumpul():
-    # Inisialisasi data awal.
-    batch_pasir = 0
-    batch_batu = 0
-    batch_air = 0
-    init_count_jin_pengumpul = 0
-    for i in range(gv.NMaxJin):
-        if gv.summoned_jin[i][2] == "jin_pengumpul":
-            init_count_jin_pengumpul += 1
+    # Kasus role logged in bukan bandung bondowoso
+    if gv.logged_in_role != "bandung_bondowoso":
+        print("Batch kumpul hanya dapat diakses oleh akun Bandung Bondowoso.")
+    else:
+        # Inisialisasi data awal.
+        batch_pasir = 0
+        batch_batu = 0
+        batch_air = 0
+        init_count_jin_pengumpul = 0
+        for i in range(gv.NMaxJin):
+            if gv.summoned_jin[i][2] == "jin_pengumpul":
+                init_count_jin_pengumpul += 1
 
-    # Kasus jin pengumpul ada yang tersummon
-    if init_count_jin_pengumpul > 0:
-        # Looping n kali (n banyaknya jin).
-        for i in range(init_count_jin_pengumpul):
-            # Generate 3 bilangan random number dari 0 sampai 5 untuk pasir, batu, dan air dengan algoritma LCG.
-            gen_pasir, gen_batu, gen_air = ut.RandomLCG(0, 5, gv.xn)
+        # Kasus jin pengumpul ada yang tersummon
+        if init_count_jin_pengumpul > 0:
+            # Looping n kali (n banyaknya jin).
+            for i in range(init_count_jin_pengumpul):
+                # Generate 3 bilangan random number dari 0 sampai 5 untuk pasir, batu, dan air dengan algoritma LCG.
+                gen_pasir, gen_batu, gen_air = ut.RandomLCG(0, 5, gv.xn)
 
-            # Perbarui jumlah terkumpul.
-            batch_pasir += gen_pasir
-            batch_batu += gen_batu
-            batch_air += gen_air
+                # Perbarui jumlah terkumpul.
+                batch_pasir += gen_pasir
+                batch_batu += gen_batu
+                batch_air += gen_air
 
-        # Update data jumlah pasir, batu, dan air.
-        gv.bahan_bangunan[0][2] += batch_pasir
-        gv.bahan_bangunan[1][2] += batch_batu
-        gv.bahan_bangunan[2][2] += batch_air
+            # Update data jumlah pasir, batu, dan air.
+            gv.bahan_bangunan[0][2] += batch_pasir
+            gv.bahan_bangunan[1][2] += batch_batu
+            gv.bahan_bangunan[2][2] += batch_air
 
-        # Cetak pesan.
-        print(f"Mengerahkan {init_count_jin_pengumpul} jin untuk mengumpulkan bahan.")
-        print(
-            f"Jin menemukan total {batch_pasir} pasir, {batch_batu} batu, dan {batch_air} air."
-        )
-    else:  # Kasus tidak ada jin pengumpul tersummon
-        # Cetak pesan
-        print(
-            "Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu."
-        )
+            # Cetak pesan.
+            print(
+                f"Mengerahkan {init_count_jin_pengumpul} jin untuk mengumpulkan bahan."
+            )
+            print(
+                f"Jin menemukan total {batch_pasir} pasir, {batch_batu} batu, dan {batch_air} air."
+            )
+        else:  # Kasus tidak ada jin pengumpul tersummon
+            # Cetak pesan
+            print(
+                "Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu."
+            )
 
 
 def laporanjin():
@@ -211,7 +217,7 @@ def laporanjin():
         jin_total = 0
         jin_pembangun = 0
         jin_pengumpul = 0
-        for i in range(gv.count_users):
+        for i in range(gv.NMaxUser):
             if gv.users[i][2] == "jin_pembangun":
                 jin_pembangun += 1
             elif gv.users[i][2] == "jin_pengumpul":
@@ -223,7 +229,7 @@ def laporanjin():
         count_terajin = -1
         nama_termalas = "-"
         count_termalas = gv.NMaxCandi + 1  # Jumlah candi maksimum
-        for i in range(gv.count_users):
+        for i in range(gv.NMaxUser):
             if gv.users[i][2] == "jin_pembangun":
                 nama_now = gv.users[i][0]
                 count_now = 0
@@ -321,6 +327,15 @@ def laporancandi():
 
 
 def read_csv(folder_name, file_name):
+    # Inisialisasi array sementara untuk concatenate string
+    temp_array = []
+    if file_name == "user.csv":
+        temp_array = [["" for j in range(3)] for i in range(gv.NMaxUser)]
+    elif file_name == "bahan_bangunan.csv":
+        temp_array = [["" for j in range(3)] for i in range(3)]
+    elif file_name == "candi.csv":
+        temp_array = [["" for j in range(5)] for i in range(gv.NMaxCandi)]
+
     # Baca CSV
     file = open(f"save/{folder_name}/{file_name}", "r")
     i = -1
@@ -329,22 +344,24 @@ def read_csv(folder_name, file_name):
         if i != -1:  # Jika buka baris pertama
             kolom = 0
             for j in range(len(line)):  # Looping sepanjang baris
-                if (
-                    line[j] != ";" and line[j] != "\n"
-                ):  # Jika ganti tidak kolom atau baris
-                    # Ubah global variable
+                # Baca character dan menyimpannya ke global variable
+                if line[j] != ";" and line[j] != "\n":
+                    temp_array[i][kolom] += line[j]
+
+                # Jika ganti kolom atau baris maka konversi data yang diperlukan ke integer dan simpan ke global var
+                if line[j] == ";" or j == len(line) - 1:
                     if file_name == "user.csv":
-                        gv.users[i][kolom] += line[j]
+                        gv.users[i][kolom] = temp_array[i][kolom]
                     elif file_name == "bahan_bangunan.csv":
-                        gv.bahan_bangunan[i][kolom] += line[j]
+                        if kolom == 2:
+                            gv.bahan_bangunan[i][kolom] = int(temp_array[i][kolom])
+                        else:
+                            gv.bahan_bangunan[i][kolom] = temp_array[i][kolom]
                     elif file_name == "candi.csv":
-                        gv.candi[i][kolom] += line[j]
-                else:  # Jika ganti kolom atau baris
-                    # Konversi beberapa data ke integer
-                    if file_name == "bahan_bangunan.csv" and kolom == 2:
-                        gv.bahan_bangunan[i][kolom] = int(gv.bahan_bangunan[i][kolom])
-                    elif file_name == "candi.csv" and kolom != 1:
-                        gv.candi[i][kolom] = int(gv.candi[i][kolom])
+                        if kolom != 1:
+                            gv.candi[i][kolom] = int(temp_array[i][kolom])
+                        else:
+                            gv.candi[i][kolom] = temp_array[i][kolom]
                     kolom += 1
                 # Next character
                 j += 1
