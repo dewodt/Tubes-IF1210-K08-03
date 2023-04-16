@@ -1,4 +1,5 @@
-from random import randint
+import argparse
+import os
 
 import globalvar as gv
 import utils as ut
@@ -317,3 +318,31 @@ def laporancandi():
         print(f"> Total Air yang digunakan: {total_air}")
         print(f"> ID Candi Termahal: {id_termahal}")
         print(f"> ID Candi Termurah: {id_termurah}")
+
+
+def load():
+    # Argparse untuk menerima nama folder
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "folder",
+        default="",
+        nargs="?",
+    )
+    args = parser.parse_args()
+    folder_load = args.folder
+
+    # Bila tidak memberikan argumen
+    if folder_load == "":
+        print("Tidak ada nama folder yang diberikan!")
+        print("Usage: python main.py <nama_folder>")
+    else:
+        # Bila nama folder tidak ada
+        if not os.path.exists(f"save/{folder_load}"):
+            print(f'Folder "{folder_load}" tidak ditemukan.')
+        else:
+            # Bila folder ada
+            print("Loading...")
+            print("Selamat datang di program “Manajerial Candi”")
+
+            # Load CSV
+            
