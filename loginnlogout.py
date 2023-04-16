@@ -8,43 +8,30 @@ def login_input():  # masukan input username dan password dari username
     return user_tuple  # return hasil input user
 
 
-def login_req(user_input):  # digunakan untuk login
-    # input user
+def login_req(user_input): #digunakan untuk login
+    #input user
     username = user_input[0]
-    password = user_input[1]
-
-    arr_user = []
-    arr_pass = []
-    # menghubungkan csv
-    with open("user.csv", "r") as file_user:
-        for line in file_user:
-            splitted_dat = line.split(
-                ";"
-            )  # split data tetapi masih dalam bentuk list in list
-            arr_user.insert(0, splitted_dat[0])
-            arr_pass.insert(0, splitted_dat[1])
-
-        # checking username dan password
+    password = user_input[1]  
+    
+    #menghubungkan csv
+    with open("user.csv", 'r') as f:
+        data = csv.reader(f, delimiter =";")
         condition = False
-        for idxuser in range(len(arr_user) - 1, -1, -1):
-            if username == arr_user[idxuser]:
+        for name in data: #username [0], password[1], role[2]
+            if name[0] == username:
                 condition = True
-                for idxpass in range(len(arr_pass) - 1, -1, -1):
-                    if password == arr_pass[idxpass]:
-                        print(f"Selamat datang, {username}!")
-                        print(
-                            'Masukkan command "help" untuk daftar command yang dapat kamu panggil.'
-                        )
-                        kondisi_login = True
-                        return kondisi_login
+                if name[1] == password:
+                    kondisi_login = True
+                    print(f"Selamat datang, {username}!")
+                    print('Masukkan command "help" untuk daftar command yang dapat kamu panggil.')
                 else:
                     print("Password salah!")
                     kondisi_login = False
     if not condition:
-        print("Username tidak terdaftar")
+        print("Username tidak terdaftar!")
         kondisi_login = False
-
-    return kondisi_login, username
+        
+    return kondisi_login
 
 
 def periksa_login(kondisi_login):
