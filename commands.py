@@ -320,6 +320,39 @@ def laporancandi():
         print(f"> ID Candi Termurah: {id_termurah}")
 
 
+def read_csv(folder_name, file_name):
+    # Baca CSV
+    file = open(f"save/{folder_name}/{file_name}", "r")
+    i = -1
+    # Iterasi setiap bari pada file
+    for line in file:
+        if i != -1:  # Jika buka baris pertama
+            kolom = 0
+            for j in range(len(line)):  # Looping sepanjang baris
+                if (
+                    line[j] != ";" and line[j] != "\n"
+                ):  # Jika ganti tidak kolom atau baris
+                    # Ubah global variable
+                    if file_name == "user.csv":
+                        gv.users[i][kolom] += line[j]
+                    elif file_name == "bahan_bangunan.csv":
+                        gv.bahan_bangunan[i][kolom] += line[j]
+                    elif file_name == "candi.csv":
+                        gv.candi[i][kolom] += line[j]
+                else:  # Jika ganti kolom atau baris
+                    # Konversi beberapa data ke integer
+                    if file_name == "bahan_bangunan.csv" and kolom == 2:
+                        gv.bahan_bangunan[i][kolom] = int(gv.bahan_bangunan[i][kolom])
+                    elif file_name == "candi.csv" and kolom != 1:
+                        gv.candi[i][kolom] = int(gv.candi[i][kolom])
+                    kolom += 1
+                # Next character
+                j += 1
+        # Next row
+        i += 1
+    file.close()
+
+
 def load():
     # Argparse untuk menerima nama folder
     parser = argparse.ArgumentParser()
@@ -342,7 +375,9 @@ def load():
         else:
             # Bila folder ada
             print("Loading...")
-            print("Selamat datang di program “Manajerial Candi”")
+            print('Selamat datang di program "Manajerial Candi"')
 
-            # Load CSV
-            
+            # Membaca data dan menyimpannya di global variable
+            read_csv(folder_load, "user.csv")
+            read_csv(folder_load, "candi.csv")
+            read_csv(folder_load, "bahan_bangunan.csv")
