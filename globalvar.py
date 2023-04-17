@@ -3,8 +3,7 @@ import datetime
 # Inisialisasi Global Variable
 # Jumlah anggota array maksimum
 NMaxCandi = 1000
-NMaxUser = 1000
-NMaxJin = 100
+NMaxUser = 102
 
 # Menyimpan state game
 logged_in_role = "bandung_bondowoso"
@@ -20,16 +19,3 @@ bahan_bangunan = [
     ["", "", 0],
     ["", "", 0],
 ]
-
-# Menyimpan data jin yang telah tersummon
-summoned_jin = [["", "", ""] for i in range(NMaxJin)]
-summoned_jin[0] = ["jinp1", "ngabs", "jin_pembangun"]
-summoned_jin[1] = ["jinp2", "ngabs", "jin_pembangun"]
-summoned_jin[2] = ["jinp3", "ngabs", "jin_pengumpul"]
-summoned_jin[3] = ["jinp4", "ngabs", "jin_pengumpul"]
-summoned_jin[4] = ["jinp5", "ngabs", "jin_pengumpul"]
-summoned_jin[5] = ["jinp6", "ngabs", "jin_pengumpul"]
-summoned_jin[6] = ["jinp7", "ngabs", "jin_pengumpul"]
-summoned_jin[7] = ["jinp8", "ngabs", "jin_pembangun"]
-summoned_jin[8] = ["jinp9", "ngabs", "jin_pembangun"]
-summoned_jin[9] = ["jinp10", "ngabs", "jin_pembangun"]
