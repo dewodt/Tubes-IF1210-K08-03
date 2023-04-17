@@ -9,58 +9,71 @@ def summonjin():
     if gv.logged_in_role != "bandung_bondowoso":
         print("summonjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
-        # Pemilihan jenis jin
-        print("Jenis jin yang dapat dipanggil:")
-        print(" (1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
-        print(" (2) Pembangun - Bertugas membangun candi")
-        # Validasi input
-        jenis_jin = ""
-        kode_jenis_jin = input("Masukkan nomor jenis jin yang ingin dipanggil: ")
-        while kode_jenis_jin != "1" and kode_jenis_jin != "2":
-            print(f'Tidak ada jenis jin bernomor "{kode_jenis_jin}"!')
-            kode_jenis_jin = input("Masukkan nomor jenis jin yang ingin dipanggil: ")
-        # Cetak pesan jin terpilih
-        if kode_jenis_jin == "1":
-            print('Memilih jin "Pengumpul".')
-            jenis_jin = "jin_pengumpul"
+        # Validasi jumlah jin yang tersummon
+        count_summoned_jin = 0
+        for i in range(gv.NMaxUser):
+            if gv.users[i][2] == "jin_pembangun" or gv.users[i][2] == "jin_pengumpul":
+                count_summoned_jin += 1
+        print(count_summoned_jin)
+
+        # Jika jin yang disummon sudah 100
+        if count_summoned_jin == 100:
+            print(
+                "Jumlah Jin telah maksimal! (100 jin). Bandung tidak dapat men-summon lebih dari itu"
+            )
         else:
-            print('Memilih jin "Pembangun".')
-            jenis_jin = "jin_pembangun"
+            # Pemilihan jenis jin
+            print("Jenis jin yang dapat dipanggil:")
+            print(" (1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
+            print(" (2) Pembangun - Bertugas membangun candi")
+            # Validasi input
+            jenis_jin = ""
+            kode_jenis_jin = input("Masukkan nomor jenis jin yang ingin dipanggil: ")
+            while kode_jenis_jin != "1" and kode_jenis_jin != "2":
+                print(f'Tidak ada jenis jin bernomor "{kode_jenis_jin}"!')
+                kode_jenis_jin = input(
+                    "Masukkan nomor jenis jin yang ingin dipanggil: "
+                )
+            # Cetak pesan jin terpilih
+            if kode_jenis_jin == "1":
+                print('Memilih jin "Pengumpul".')
+                jenis_jin = "jin_pengumpul"
+            else:
+                print('Memilih jin "Pembangun".')
+                jenis_jin = "jin_pembangun"
 
-        # Validasi username
-        username = input("Masukkan username jin: ")
-        tersedia = False
-        while not tersedia:
-            for i in range(gv.NMaxUser):
-                if gv.users[i][0] == username:
-                    print(f'Username "{username}" sudah diambil!')
-                    username = input("Masukkan username jin: ")
-                    break
-                elif i == gv.NMaxUser - 1:
-                    tersedia = True
+            # Validasi username
+            username = input("Masukkan username jin: ")
+            tersedia = False
+            while not tersedia:
+                for i in range(gv.NMaxUser):
+                    if gv.users[i][0] == username:
+                        print(f'Username "{username}" sudah diambil!')
+                        username = input("Masukkan username jin: ")
+                        break
+                    elif i == gv.NMaxUser - 1:
+                        tersedia = True
 
-        # Validasi password
-        password = input("Masukkan password jin: ")
-        while len(password) < 5 or len(password) > 25:
-            print("Password panjangnya harus 5-25 karakter!")
+            # Validasi password
             password = input("Masukkan password jin: ")
+            while len(password) < 5 or len(password) > 25:
+                print("Password panjangnya harus 5-25 karakter!")
+                password = input("Masukkan password jin: ")
 
-        # Update global variable
-        for i in range(gv.NMaxJin):
-            # Mengisi array users pertama yang ketemu kosong
-            if gv.users[i][0] == "":
-                gv.users[i][0] = username
-                gv.users[i][1] = password
-                gv.users[i][2] = jenis_jin
-                break
+            # Update global variable
+            for i in range(gv.NMaxJin):
+                # Mengisi array users pertama yang ketemu kosong
+                if gv.users[i][0] == "":
+                    gv.users[i][0] = username
+                    gv.users[i][1] = password
+                    gv.users[i][2] = jenis_jin
+                    break
 
-        print(gv.users)
-
-        # Cetak pesanSummon jin
-        print("Mengumpulkan sesajen...")
-        print("Menyerahkan sesajen...")
-        print("Membacakan mantra...")
-        print(f"{username} berhasil dipanggil!")
+            # Cetak pesanSummon jin
+            print("Mengumpulkan sesajen...")
+            print("Menyerahkan sesajen...")
+            print("Membacakan mantra...")
+            print(f"{username} berhasil dipanggil!")
 
 
 def hapusjin():
