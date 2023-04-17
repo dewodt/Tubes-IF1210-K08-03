@@ -63,6 +63,33 @@ def summonjin():
         print(f"{username} berhasil dipanggil!")
 
 
+def hapusjin():
+    # Inisialisasi input
+    found = False
+    index_found = -1
+    username = input("Masukkan username jin : ")
+
+    # Mengecek bila username ditemukan
+    for i in range(gv.NMaxUser):
+        if gv.users[i][0] == username:
+            found = True
+            index_found = i
+            break
+
+    # Bila ditemukan
+    if found:
+        konfirmasi = input(
+            "Apakah anda yakin ingin menghapus jin dengan username Jin1 (Y/N)? "
+        )
+        if konfirmasi == "Y":
+            gv.users[index_found][0] = ""
+            gv.users[index_found][1] = ""
+            gv.users[index_found][2] = ""
+            print("Jin telah berhasil dihapus dari alam gaib.")
+    else:  # Bila tak ditemukan
+        print("Tidak ada jin dengan username tersebut.")
+
+
 def bangun():
     # Kasus role logged in bukan jin pembangun
     if gv.logged_in_role != "jin_pembangun":
