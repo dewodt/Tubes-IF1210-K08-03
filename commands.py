@@ -82,10 +82,21 @@ def hapusjin():
             "Apakah anda yakin ingin menghapus jin dengan username Jin1 (Y/N)? "
         )
         if konfirmasi == "Y":
+            # Hapus data jin
             gv.users[index_found][0] = ""
             gv.users[index_found][1] = ""
             gv.users[index_found][2] = ""
             print("Jin telah berhasil dihapus dari alam gaib.")
+
+            # Hapus data candi yang dibuat oleh jin tersebut
+            for i in range(gv.NMaxCandi):
+                # Jika candi dibuat oleh jin tersebut
+                if gv.candi[i][1] == username:
+                    gv.candi[i][0] = 0
+                    gv.candi[i][1] = ""
+                    gv.candi[i][2] = 0
+                    gv.candi[i][3] = 0
+                    gv.candi[i][4] = 0
     else:  # Bila tak ditemukan
         print("Tidak ada jin dengan username tersebut.")
 
