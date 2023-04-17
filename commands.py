@@ -60,7 +60,7 @@ def summonjin():
                 password = input("Masukkan password jin: ")
 
             # Update global variable
-            for i in range(gv.NMaxJin):
+            for i in range(gv.NMaxUser):
                 # Mengisi array users pertama yang ketemu kosong
                 if gv.users[i][0] == "":
                     gv.users[i][0] = username
@@ -160,7 +160,7 @@ def bangun():
         init_pasir = gv.bahan_bangunan[0][2]
         init_batu = gv.bahan_bangunan[1][2]
         init_air = gv.bahan_bangunan[2][2]
-        init_jin = gv.logged_in_role
+        init_jin = gv.logged_in_username
         # Hitung jumlah candi awal
         init_count_candi = 0
         for i in range(gv.NMaxCandi):
@@ -177,14 +177,11 @@ def bangun():
             gv.bahan_bangunan[1][2] -= gen_batu
             gv.bahan_bangunan[2][2] -= gen_air
 
-            # Update array candi.
-            gv.candi[init_count_candi] = [
-                init_count_candi - 1,
-                init_jin,
-                gen_pasir,
-                gen_batu,
-                gen_air,
-            ]
+            # Update array candi dengan mengisi index terkecil terlebih dahulu
+            for i in range(gv.NMaxCandi):
+                if gv.candi[i][0] == 0:
+                    gv.candi[i] = [i + 1, init_jin, gen_pasir, gen_batu, gen_air]
+                    break  # Hanya menambahkan satu candi
 
             # Cetak pesan.
             print("Candi berhasil dibangun.")
@@ -232,31 +229,12 @@ def batchbangun():
         for i in range(gv.NMaxCandi):
             if gv.candi[i][0] != 0:
                 init_count_candi += 1
-        init_sisa_candi = 100 - init_count_candi
 
-        # Hitung jumlah jin pembangun
+        # Hitung jumlah jin pembangun awal
         init_count_jin_pembangun = 0
-        for i in range(gv.NMaxJin):
-            if gv.summoned_jin[i][2] == "jin_pembangun":
+        for i in range(gv.NMaxUser):
+            if gv.users[i][2] == "jin_pembangun":
                 init_count_jin_pembangun += 1
-
-        # Bikin array berisi nama jin pembangun
-        j = 0
-        init_array_jin_pembangun = ["" for i in range(init_count_jin_pembangun)]
-        for i in range(gv.NMaxJin):
-            if gv.summoned_jin[i][2] == "jin_pembangun":
-                init_array_jin_pembangun[j] = gv.summoned_jin[i][0]
-                j += 1
-
-        # Looping n kali (n banyaknya jin yang tersummon).
-        for i in range(init_count_jin_pembangun):
-            # Generate 3 bilangan random number dari 1 sampai 5 untuk pasir, batu, dan air dengan algoritma LCG.
-            gen_pasir, gen_batu, gen_air = ut.RandomLCG(1, 5, gv.xn)
-
-            # Perbarui jumlah terkumpul.
-            batch_pasir += gen_pasir
-            batch_batu += gen_batu
-            batch_air += gen_air
 
         # Jika ada jin pembangun tersummon
         if init_count_jin_pembangun == 0:
@@ -264,6 +242,32 @@ def batchbangun():
                 "Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu."
             )
         else:
+            # Bikin array berisi nama jin pembangun dan generate material yang dipakainya untuk membangun sebuah candi
+            j = 0
+            init_array_jin_pembangun = [
+                ["", 0, 0, 0] for i in range(init_count_jin_pembangun)
+            ]
+
+            # Untuk mengisi nama-nama jin pembangun dan material yang digeneratenya
+            for i in range(gv.NMaxUser):
+                if gv.users[i][2] == "jin_pembangun":
+                    # Generate 3 bilangan random number dari 1 sampai 5 untuk pasir, batu, dan air dengan algoritma LCG.
+                    gen_pasir, gen_batu, gen_air = ut.RandomLCG(1, 5, gv.xn)
+
+                    # Update array jin pembangun
+                    init_array_jin_pembangun[j][0] = gv.users[i][0]  # username jin
+                    init_array_jin_pembangun[j][1] = gen_pasir  # pasir
+                    init_array_jin_pembangun[j][2] = gen_batu  # batu
+                    init_array_jin_pembangun[j][3] = gen_air  # air
+
+                    # Perbarui jumlah terkumpul dalam 1 batch
+                    batch_pasir += gen_pasir
+                    batch_batu += gen_batu
+                    batch_air += gen_air
+
+                    # Next iteration
+                    j += 1
+
             print(
                 f"Mengerahkan {init_count_jin_pembangun} jin untuk membangun candi dengan total bahan {batch_pasir} pasir, {batch_batu} batu, dan {batch_air} air."
             )
@@ -278,20 +282,31 @@ def batchbangun():
                 gv.bahan_bangunan[1][2] -= batch_batu
                 gv.bahan_bangunan[2][2] -= batch_air
 
-                # Update array candi.
-                for i in range(
-                    init_count_candi, init_count_candi + init_count_jin_pembangun
-                ):
-                    gv.candi[i] = [
-                        i,
-                        init_array_jin_pembangun[i - init_count_candi],
-                        gen_pasir,
-                        gen_batu,
-                        gen_air,
-                    ]
+                # Update array candi dari array terkecil
+                i = 0
+                count_terbangun = 0
+                while i < gv.NMaxCandi and count_terbangun < init_count_jin_pembangun:
+                    if gv.candi[i][0] == 0:
+                        gv.candi[i] = [
+                            i + 1,
+                            init_array_jin_pembangun[count_terbangun][0],
+                            init_array_jin_pembangun[count_terbangun][1],
+                            init_array_jin_pembangun[count_terbangun][2],
+                            init_array_jin_pembangun[count_terbangun][3],
+                        ]
+                        count_terbangun += 1
+                    i += 1
 
                 # Cetak pesan.
-                print(f"Jin berhasil membangun total {init_count_jin_pembangun} candi.")
+                # Kasus jika jumlah jin pembangun kurang atau sama dengan sisa slot array candi
+                if init_count_jin_pembangun <= gv.NMaxCandi - init_count_candi:
+                    print(
+                        f"Jin berhasil membangun total {init_count_jin_pembangun} candi."
+                    )
+                else:  # Kasus jika jin pembangun lebih dari sisa slot array candi
+                    print(
+                        f"Jin berhasil membangun total {gv.NMaxCandi - init_count_candi} candi."
+                    )
             else:  # Bahan tidak cukup
                 # Mencari jumlah kekurangan bahan
                 kurang_pasir = 0
@@ -319,8 +334,8 @@ def batchkumpul():
         batch_batu = 0
         batch_air = 0
         init_count_jin_pengumpul = 0
-        for i in range(gv.NMaxJin):
-            if gv.summoned_jin[i][2] == "jin_pengumpul":
+        for i in range(gv.NMaxUser):
+            if gv.users[i][2] == "jin_pengumpul":
                 init_count_jin_pengumpul += 1
 
         # Kasus jin pengumpul ada yang tersummon
