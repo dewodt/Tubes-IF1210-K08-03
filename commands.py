@@ -689,3 +689,18 @@ def help():  # (kondisi login, username yang masuk)
         print("=========== HELP ===========")
         print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
         print("2. exit \n Untuk keluar dari sistem program")
+
+
+def exit():
+    # Input dan Validasi Konfirmasi
+    konfirmasi = input(
+        "Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) "
+    )
+    while konfirmasi != "y" and konfirmasi != "n":
+        konfirmasi = input(
+            "Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) "
+        )
+
+    # Bila konfirmasi "y"
+    if konfirmasi == "y":
+        save()
