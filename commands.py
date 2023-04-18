@@ -5,6 +5,42 @@ import globalvar as gv
 import utils as ut
 
 
+def login():
+    username = input("Username: ")
+    password = input("Password: ")
+
+    if gv.logged_in_username != "":
+        print("Login gagal!")
+        print(
+            f'Anda telah login dengan username {gv.logged_in_username}, silahkan lakukan "logout" sebelum melakukan login kembali.'
+        )
+    else:
+        # Inisialisasi boolean
+        username_found = False
+        password_valid = False
+
+        # Looping untuk mengecek jika ada username yang cocok, dan jika ada apakah passwordnya juga cocok?
+        for i in range(gv.NMaxUser):
+            if gv.users[i][0] == username:
+                username_found = True
+                if gv.users[i][1] == password:
+                    password_valid = True
+
+        # Jika tidak ada username yang cocok
+        if not username_found:
+            print("Username tidak terdaftar!")
+        else:
+            # Jika username cocok namun password tidak valid
+            if not password_valid:
+                print("Password salah!")
+            # Jika username cocok dan password valid
+            else:
+                print(f"Selamat datang, {gv.logged_in_username}!")
+                print(
+                    "Masukkan command “help” untuk daftar command yang dapat kamu panggil."
+                )
+
+
 def summonjin():
     if gv.logged_in_role != "bandung_bondowoso":
         print("summonjin hanya dapat diakses oleh akun Bandung Bondowoso.")
