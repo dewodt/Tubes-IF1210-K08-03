@@ -35,10 +35,26 @@ def login():
                 print("Password salah!")
             # Jika username cocok dan password valid
             else:
+                # Update global variable
+                gv.logged_in_username = username
+
+                # Cetak pesan
                 print(f"Selamat datang, {gv.logged_in_username}!")
                 print(
                     "Masukkan command “help” untuk daftar command yang dapat kamu panggil."
                 )
+
+
+def logout():
+    if gv.logged_in_username == "":
+        # Cetak pesan
+        print("Logout gagal!")
+        print(
+            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan logout"
+        )
+    else:
+        # Update global variable menjadi kosong
+        gv.logged_in_username = ""
 
 
 def summonjin():
