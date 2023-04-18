@@ -539,6 +539,36 @@ def laporancandi():
         print(f"> ID Candi Termurah: {id_termurah}")
 
 
+def hancurkancandi():
+    if gv.logged_in_role != "roro_jonggrang":
+        print("Hancurkan candi hanya dapat diakses oleh akun Bandung Bondowoso.")
+    else:
+        # Input id candi yang ingin dihancurkan
+        id_hancurkan = input("Masukkan ID candi: ")
+
+        # Looping untuk mencari id yang cocok dengan input user dan tidak boleh 0 (id 0 adalah item kosong)
+        candi_found = False
+        for i in range(gv.NMaxCandi):
+            if gv.candi[i][0] == id_hancurkan and id_hancurkan != 0:
+                candi_found = True
+                break
+
+        # Jika candi tidak ketemu
+        if not candi_found:
+            print("Tidak ada candi dengan ID tersebut.")
+        else:  # Jika ketemu
+            konfirmasi = input(
+                f"Apakah anda yakin ingin menghancurkan candi ID: {id_hancurkan} (Y/N)? "
+            )
+            # Jika konfirmasi Y
+            if konfirmasi == "Y":
+                # Update global variable
+                gv.candi[id_hancurkan - 1] = [0, "", 0, 0, 0]
+
+                # Cetak pesan
+                print("Candi telah berhasil dihancurkan.")
+
+
 def load():
     # Argparse untuk menerima nama folder
     parser = argparse.ArgumentParser()
