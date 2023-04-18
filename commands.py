@@ -541,7 +541,7 @@ def laporancandi():
 
 def hancurkancandi():
     if gv.logged_in_role != "roro_jonggrang":
-        print("Hancurkan candi hanya dapat diakses oleh akun Bandung Bondowoso.")
+        print("Hancurkan candi hanya dapat diakses oleh akun Roro Jonggrang.")
     else:
         # Input id candi yang ingin dihancurkan
         id_hancurkan = input("Masukkan ID candi: ")
@@ -567,6 +567,27 @@ def hancurkancandi():
 
                 # Cetak pesan
                 print("Candi telah berhasil dihancurkan.")
+
+
+def ayamberkokok():
+    if gv.logged_in_role != "roro_jonggrang":
+        print("Ayam berkokok hanya dapat diakses oleh akun Roro Jonggrang.")
+    else:
+        # Hitung banyak candi
+        count_candi = 0
+        for i in range(gv.NMaxCandi):
+            if gv.candi[i][0] != 0:
+                count_candi += 1
+        # Cetak pesan awal
+        print("Kukuruyuk.. Kukuruyuk..")
+        print(f"Jumlah Candi: {count_candi}")
+        # Jika roro jongrang menang
+        if count_candi < 100:
+            print("Selamat, Roro Jonggrang memenangkan permainan!")
+            print("*Bandung Bondowoso angry noise*")
+            print("Roro Jonggrang dikutuk menjadi candi.")
+        else: # Jika bandung bondowoso menang
+            print("Yah, Bandung Bondowoso memenangkan permainan!")
 
 
 def load():
