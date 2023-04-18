@@ -5,6 +5,41 @@ import globalvar as gv
 import utils as ut
 
 
+def run(masukan):
+    if masukan == "login":
+        login()
+    elif masukan == "logout":
+        logout()
+    elif masukan == "summonjin":
+        summonjin()
+    elif masukan == "hapusjin":
+        hapusjin()
+    elif masukan == "ubahjin":
+        ubahjin()
+    elif masukan == "bangun":
+        bangun()
+    elif masukan == "kumpul":
+        kumpul()
+    elif masukan == "batchbangun":
+        batchbangun()
+    elif masukan == "batchkumpul":
+        batchkumpul()
+    elif masukan == "laporanjin":
+        laporanjin()
+    elif masukan == "laporancandi":
+        laporancandi()
+    elif masukan == "hancurkancandi":
+        hancurkancandi()
+    elif masukan == "ayamberkokok":
+        ayamberkokok()
+    elif masukan == "save":
+        save()
+    elif masukan == "help":
+        help()
+    elif masukan == "exit":
+        exit()
+
+
 def login():
     username = input("Username: ")
     password = input("Password: ")
@@ -37,6 +72,15 @@ def login():
             else:
                 # Update global variable
                 gv.logged_in_username = username
+                if username == "Bondowoso":
+                    gv.logged_in_role = "bandung_bondowoso"
+                elif username == "Roro":
+                    gv.logged_in_role = "roro_jonggrang"
+                else:
+                    for i in range(gv.NMaxUser):
+                        if gv.users[i][0] == username:
+                            gv.logged_in_role = gv.users[i][2]
+                            break
 
                 # Cetak pesan
                 print(f"Selamat datang, {gv.logged_in_username}!")
@@ -687,7 +731,7 @@ def help():  # (kondisi login, username yang masuk)
 
     else:
         print("=========== HELP ===========")
-        print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
+        print("1. login \n Untuk masuk menggunakan akun")
         print("2. exit \n Untuk keluar dari sistem program")
 
 

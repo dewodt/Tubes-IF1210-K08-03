@@ -6,8 +6,8 @@ NMaxCandi = 1000
 NMaxUser = 102
 
 # Menyimpan state game
-logged_in_role = "bandung_bondowoso"
-logged_in_username = "Bondowoso"
+logged_in_role = ""
+logged_in_username = ""
 
 # Simpan nilai awal (seed) untuk Random LCG dan menyimpan x ke n untuk perhitungan selanjutnya.
 xn = int(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
