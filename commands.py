@@ -41,15 +41,14 @@ def run(masukan):
 
 
 def login():
-    username = input("Username: ")
-    password = input("Password: ")
-
     if gv.logged_in_username != "":
         print("Login gagal!")
         print(
             f'Anda telah login dengan username {gv.logged_in_username}, silahkan lakukan "logout" sebelum melakukan login kembali.'
         )
     else:
+        username = input("Username: ")
+        password = input("Password: ")
         # Inisialisasi boolean
         username_found = False
         password_valid = False
@@ -70,7 +69,7 @@ def login():
                 print("Password salah!")
             # Jika username cocok dan password valid
             else:
-                # Update global variable
+                # Update global variable logged in role
                 gv.logged_in_username = username
                 if username == "Bondowoso":
                     gv.logged_in_role = "bandung_bondowoso"
@@ -543,7 +542,7 @@ def laporancandi():
         harga_termahal = -1
         id_termurah = "-"
         harga_termurah = 200000  # Pasir, batu, air maks 5 -> harga pasti < 200000
-        
+
         # Hitung total candi, material yang digunakan, dan cari candi termahal.
         for i in range(gv.NMaxCandi):
             if gv.candi[i][0] != 0:
@@ -707,7 +706,6 @@ def help():  # (kondisi login, username yang masuk)
             print(
                 "7. laporancandi \n Mengambil laporan candi mulai dari total candi, ID Candi termahal/termurah, dan jumlah material yang digunakan"
             )
-
         elif gv.logged_in_role == "roro_jonggrang":
             print("=========== HELP ===========")
             print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
@@ -715,19 +713,16 @@ def help():  # (kondisi login, username yang masuk)
                 "2. hancurkancandi \n Menghancurkan candi sesuai ID candi yang diinput"
             )
             print("3. ayamberkokok \n Menyelesaikan permainan")
-
-        elif gv.logged_in_role == "jin_pembangung":
+        elif gv.logged_in_role == "jin_pembangun":
             print("========== HELP ===========")
             print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
             print("2. bangun \n Jin akan membangun candi jika bahan bangunan cukup")
-
         elif gv.logged_in_role == "jin_pengumpul":
             print("========== HELP ===========")
             print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
             print(
                 "2. kumpul \n Jin pengumpul akan mencari bahan berupa pasir, batu, dan air secara random"
             )
-
     else:
         print("=========== HELP ===========")
         print("1. login \n Untuk masuk menggunakan akun")
