@@ -543,35 +543,35 @@ def laporancandi():
         harga_termahal = -1
         id_termurah = "-"
         harga_termurah = 200000  # Pasir, batu, air maks 5 -> harga pasti < 200000
+        
         # Hitung total candi, material yang digunakan, dan cari candi termahal.
-        i = 0
-        while i < gv.NMaxCandi and gv.candi[i][0] != 0:
-            # Total candi
-            total_candi += 1
+        for i in range(gv.NMaxCandi):
+            if gv.candi[i][0] != 0:
+                # Total candi
+                total_candi += 1
 
-            # Material total candi
-            total_pasir += gv.candi[i][2]
-            total_batu += gv.candi[i][3]
-            total_air += gv.candi[i][4]
+                # Material total candi
+                total_pasir += gv.candi[i][2]
+                total_batu += gv.candi[i][3]
+                total_air += gv.candi[i][4]
 
-            # Candi termahal
-            id_now = gv.candi[i][0]
-            harga_now = (
-                10000 * gv.candi[i][2] + 15000 * gv.candi[i][3] + 7500 * gv.candi[i][4]
-            )
+                # Candi termahal
+                id_now = gv.candi[i][0]
+                harga_now = (
+                    10000 * gv.candi[i][2]
+                    + 15000 * gv.candi[i][3]
+                    + 7500 * gv.candi[i][4]
+                )
 
-            # Jika dua candi sama-sama termahal/termurah, keluarkan indeks terendah.
-            # Update termahal
-            if harga_now > harga_termahal:
-                harga_termahal = harga_now
-                id_termahal = id_now
-            # Update termurah
-            if harga_now < harga_termurah:
-                harga_termurah = harga_now
-                id_termurah = id_now
-
-            # Iterasi selanjutnya
-            i += 1
+                # Jika dua candi sama-sama termahal/termurah, keluarkan indeks terendah.
+                # Update termahal
+                if harga_now > harga_termahal:
+                    harga_termahal = harga_now
+                    id_termahal = id_now
+                # Update termurah
+                if harga_now < harga_termurah:
+                    harga_termurah = harga_now
+                    id_termurah = id_now
 
         # Cetak pesan
         print(f"> Total Candi: {total_candi}")
