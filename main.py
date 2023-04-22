@@ -8,5 +8,5 @@ cmd.load()
 while True:
     masukan = input(">>> ")
     cmd.run(masukan)
-    if masukan == "exit":
+    if masukan == "exit" or masukan == "ayamberkokok":
         break

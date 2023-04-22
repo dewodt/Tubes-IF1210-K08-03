@@ -561,7 +561,6 @@ def laporancandi():
             )
 
             # Jika dua candi sama-sama termahal/termurah, keluarkan indeks terendah.
-            print(harga_now)
             # Update termahal
             if harga_now > harga_termahal:
                 harga_termahal = harga_now
@@ -588,7 +587,7 @@ def hancurkancandi():
         print("Hancurkan candi hanya dapat diakses oleh akun Roro Jonggrang.")
     else:
         # Input id candi yang ingin dihancurkan
-        id_hancurkan = input("Masukkan ID candi: ")
+        id_hancurkan = int(input("Masukkan ID candi: "))
 
         # Looping untuk mencari id yang cocok dengan input user dan tidak boleh 0 (id 0 adalah item kosong)
         candi_found = False
