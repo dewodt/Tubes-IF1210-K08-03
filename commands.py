@@ -5,7 +5,7 @@ import globalvar as gv
 import utils as ut
 
 
-def run(masukan):
+def run(masukan: str):
     if masukan == "login":
         login()
     elif masukan == "logout":
