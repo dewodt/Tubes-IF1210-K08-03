@@ -160,9 +160,8 @@ def summonjin():
             for i in range(gv.NMaxUser):
                 # Mengisi array users pertama yang ketemu kosong
                 if gv.users[i][0] == "":
-                    gv.users[i][0] = username
-                    gv.users[i][1] = password
-                    gv.users[i][2] = jenis_jin
+                    # Update array users
+                    gv.users[i] = [username, password, jenis_jin]
                     break
 
             # Cetak pesanSummon jin
@@ -361,10 +360,12 @@ def batchbangun():
                     gen_pasir, gen_batu, gen_air = ut.RandomLCG(1, 5, gv.xn)
 
                     # Update array jin pembangun
-                    init_array_jin_pembangun[j][0] = gv.users[i][0]  # username jin
-                    init_array_jin_pembangun[j][1] = gen_pasir  # pasir
-                    init_array_jin_pembangun[j][2] = gen_batu  # batu
-                    init_array_jin_pembangun[j][3] = gen_air  # air
+                    init_array_jin_pembangun = [
+                        gv.users[i][0],
+                        gen_pasir,
+                        gen_batu,
+                        gen_air,
+                    ]
 
                     # Perbarui jumlah terkumpul dalam 1 batch
                     batch_pasir += gen_pasir
@@ -702,41 +703,53 @@ def help():  # (kondisi login, username yang masuk)
     if gv.logged_in_username != "":
         if gv.logged_in_role == "bandung_bondowoso":
             print("=========== HELP ===========")
-            print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
-            print("2. summonjin \n Memanggil jin dari dunia lain.")
+            print("1. logout")
+            print("Untuk keluar dari akun yang digunakan sekaran")
+            print("2. summonjin")
+            print("Memanggil jin dari dunia lain.")
+            print("3. hapusjin")
             print(
-                "Setelah memilih jenis jin yang ingin dipanggil, Bondowoso harus memilih username dan password untuk jin tersebut"
+                "Menghapus jin dengan memasukkan username jin. Jika jin terhapus, candi yang dibuat oleh jin juga ikut terhapus"
             )
-            print("3. hapusjin \n menghapus jin dengan memasukkan username jin.")
-            print("Jika jin terhapus, candi yang dibuat oleh jin juga ikut terhapus")
+            print("4. undo")
             print(
-                "4. batchkumpul \n setelah command dijalankan, jin tipe pengumpul akan mengumpulkan bahan secara random"
+                "Mengundo jin yang telah anda hapus. Setelah save, memory undo direset."
             )
+            print("5. batchkumpul")
             print(
-                "5. batchbangun \n Setelah command dijalankan setiap jin akan membangun candi dengan bahan yang di random untuk setiap candi"
+                "Setelah command dijalankan, jin tipe pengumpul akan mengumpulkan bahan secara random"
             )
+            print("6. batchbangun")
             print(
-                "6. laporanjin \n Mengambil laporan jin untuk mengetahui kinerja para jin"
+                "Setelah command dijalankan setiap jin akan membangun candi dengan bahan yang di random untuk setiap candi"
             )
+            print("7. laporanjin")
+            print("Mengambil laporan jin untuk mengetahui kinerja para jin")
+            print("8. laporancandi")
             print(
-                "7. laporancandi \n Mengambil laporan candi mulai dari total candi, ID Candi termahal/termurah, dan jumlah material yang digunakan"
+                "Mengambil laporan candi mulai dari total candi, ID Candi termahal/termurah, dan jumlah material yang digunakan"
             )
         elif gv.logged_in_role == "roro_jonggrang":
             print("=========== HELP ===========")
-            print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
-            print(
-                "2. hancurkancandi \n Menghancurkan candi sesuai ID candi yang diinput"
-            )
-            print("3. ayamberkokok \n Menyelesaikan permainan")
+            print("1. logout")
+            print("Untuk keluar dari akun yang digunakan sekarang")
+            print("2. hancurkancandi")
+            print("Menghancurkan candi sesuai ID candi yang diinput")
+            print("3. ayamberkokok")
+            print("Menyelesaikan permainan")
         elif gv.logged_in_role == "jin_pembangun":
             print("========== HELP ===========")
-            print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
-            print("2. bangun \n Jin akan membangun candi jika bahan bangunan cukup")
+            print("1. logout")
+            print("Untuk keluar dari akun yang digunakan sekarang")
+            print("2. bangun")
+            print("Jin akan membangun candi jika bahan bangunan cukup")
         elif gv.logged_in_role == "jin_pengumpul":
             print("========== HELP ===========")
-            print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
+            print("1. logout")
+            print("Untuk keluar dari akun yang digunakan sekarang")
+            print("2. kumpul")
             print(
-                "2. kumpul \n Jin pengumpul akan mencari bahan berupa pasir, batu, dan air secara random"
+                "Jin pengumpul akan mencari bahan berupa pasir, batu, dan air secara random"
             )
     else:
         print("=========== HELP ===========")
