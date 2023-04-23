@@ -2,7 +2,7 @@ import globalvar as gv
 
 
 # Menerima range min, max, dan seed dan mengembalikan 3 bilangan random
-def RandomLCG(min, max, seed):
+def RandomLCG(min: int, max: int, seed: int) -> list[int]:
     random_array = [0, 0, 0]
     a, c, m = 1103515245, 12345, 2**31 - 1
     gv.xn = (a * seed + c) % m
@@ -16,7 +16,7 @@ def RandomLCG(min, max, seed):
 
 
 # Read CSV
-def read_csv(folder_name, file_name):
+def read_csv(folder_name: str, file_name: str):
     # Inisialisasi array sementara untuk concatenate string
     temp_array = []
     if file_name == "user.csv":
@@ -61,7 +61,7 @@ def read_csv(folder_name, file_name):
 
 
 # Write CSV
-def write_csv(folder_name, file_name):
+def write_csv(folder_name: str, file_name: str):
     message = ""
     # Menuliskan array user menjadi string
     if file_name == "user.csv":

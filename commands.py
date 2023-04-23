@@ -5,7 +5,7 @@ import globalvar as gv
 import utils as ut
 
 
-def run(masukan):
+def run(masukan: str):
     if masukan == "login":
         login()
     elif masukan == "logout":
@@ -38,6 +38,8 @@ def run(masukan):
         help()
     elif masukan == "exit":
         exit()
+    elif masukan == "undo":
+        undo()
 
 
 def login():
@@ -158,9 +160,8 @@ def summonjin():
             for i in range(gv.NMaxUser):
                 # Mengisi array users pertama yang ketemu kosong
                 if gv.users[i][0] == "":
-                    gv.users[i][0] = username
-                    gv.users[i][1] = password
-                    gv.users[i][2] = jenis_jin
+                    # Update array users
+                    gv.users[i] = [username, password, jenis_jin]
                     break
 
             # Cetak pesanSummon jin
@@ -188,24 +189,33 @@ def hapusjin():
     # Bila ditemukan
     if found:
         konfirmasi = input(
-            "Apakah anda yakin ingin menghapus jin dengan username Jin1 (Y/N)? "
+            f"Apakah anda yakin ingin menghapus jin dengan username {username} (Y/N)? "
         )
         if konfirmasi == "Y":
-            # Hapus data jin
-            gv.users[index_found][0] = ""
-            gv.users[index_found][1] = ""
-            gv.users[index_found][2] = ""
+            # Cari index kosong terkecil pada array undo_jin
+            index_undo = -1
+            for j in range(gv.NMaxUser):
+                if gv.undo_jin[j][0] == "":
+                    index_undo = j
+                    break
+
+            # Update array undo jin
+            gv.undo_jin[index_undo] = gv.users[index_found]
+
+            # Update array user
+            gv.users[index_found] = ["", "", ""]
             print("Jin telah berhasil dihapus dari alam gaib.")
 
             # Hapus data candi yang dibuat oleh jin tersebut
             for i in range(gv.NMaxCandi):
                 # Jika candi dibuat oleh jin tersebut
                 if gv.candi[i][1] == username:
-                    gv.candi[i][0] = 0
-                    gv.candi[i][1] = ""
-                    gv.candi[i][2] = 0
-                    gv.candi[i][3] = 0
-                    gv.candi[i][4] = 0
+                    # Update array undo candi
+                    gv.undo_candi[i] = gv.candi[i]
+
+                    # Update array candi
+                    gv.candi[i] = [0, "", 0, 0, 0]
+
     else:  # Bila tak ditemukan
         print("Tidak ada jin dengan username tersebut.")
 
@@ -350,10 +360,12 @@ def batchbangun():
                     gen_pasir, gen_batu, gen_air = ut.RandomLCG(1, 5, gv.xn)
 
                     # Update array jin pembangun
-                    init_array_jin_pembangun[j][0] = gv.users[i][0]  # username jin
-                    init_array_jin_pembangun[j][1] = gen_pasir  # pasir
-                    init_array_jin_pembangun[j][2] = gen_batu  # batu
-                    init_array_jin_pembangun[j][3] = gen_air  # air
+                    init_array_jin_pembangun = [
+                        gv.users[i][0],
+                        gen_pasir,
+                        gen_batu,
+                        gen_air,
+                    ]
 
                     # Perbarui jumlah terkumpul dalam 1 batch
                     batch_pasir += gen_pasir
@@ -682,46 +694,62 @@ def save():
     ut.write_csv(folder_save, "bahan_bangunan.csv")
     print(f"Berhasil menyimpan data di folder save/{folder_save}!")
 
+    # Reset undo array
+    gv.undo_jin = [["", "", ""] for i in range(gv.NMaxUser)]
+    gv.undo_candi = [[0, "", 0, 0, 0] for i in range(gv.NMaxCandi)]
+
 
 def help():  # (kondisi login, username yang masuk)
     if gv.logged_in_username != "":
         if gv.logged_in_role == "bandung_bondowoso":
             print("=========== HELP ===========")
-            print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
-            print("2. summonjin \n Memanggil jin dari dunia lain.")
+            print("1. logout")
+            print("Untuk keluar dari akun yang digunakan sekaran")
+            print("2. summonjin")
+            print("Memanggil jin dari dunia lain.")
+            print("3. hapusjin")
             print(
-                "Setelah memilih jenis jin yang ingin dipanggil, Bondowoso harus memilih username dan password untuk jin tersebut"
+                "Menghapus jin dengan memasukkan username jin. Jika jin terhapus, candi yang dibuat oleh jin juga ikut terhapus"
             )
-            print("3. hapusjin \n menghapus jin dengan memasukkan username jin.")
-            print("Jika jin terhapus, candi yang dibuat oleh jin juga ikut terhapus")
+            print("4. undo")
             print(
-                "4. batchkumpul \n setelah command dijalankan, jin tipe pengumpul akan mengumpulkan bahan secara random"
+                "Mengundo jin yang telah anda hapus. Setelah save, memory undo direset."
             )
+            print("5. batchkumpul")
             print(
-                "5. batchbangun \n Setelah command dijalankan setiap jin akan membangun candi dengan bahan yang di random untuk setiap candi"
+                "Setelah command dijalankan, jin tipe pengumpul akan mengumpulkan bahan secara random"
             )
+            print("6. batchbangun")
             print(
-                "6. laporanjin \n Mengambil laporan jin untuk mengetahui kinerja para jin"
+                "Setelah command dijalankan setiap jin akan membangun candi dengan bahan yang di random untuk setiap candi"
             )
+            print("7. laporanjin")
+            print("Mengambil laporan jin untuk mengetahui kinerja para jin")
+            print("8. laporancandi")
             print(
-                "7. laporancandi \n Mengambil laporan candi mulai dari total candi, ID Candi termahal/termurah, dan jumlah material yang digunakan"
+                "Mengambil laporan candi mulai dari total candi, ID Candi termahal/termurah, dan jumlah material yang digunakan"
             )
         elif gv.logged_in_role == "roro_jonggrang":
             print("=========== HELP ===========")
-            print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
-            print(
-                "2. hancurkancandi \n Menghancurkan candi sesuai ID candi yang diinput"
-            )
-            print("3. ayamberkokok \n Menyelesaikan permainan")
+            print("1. logout")
+            print("Untuk keluar dari akun yang digunakan sekarang")
+            print("2. hancurkancandi")
+            print("Menghancurkan candi sesuai ID candi yang diinput")
+            print("3. ayamberkokok")
+            print("Menyelesaikan permainan")
         elif gv.logged_in_role == "jin_pembangun":
             print("========== HELP ===========")
-            print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
-            print("2. bangun \n Jin akan membangun candi jika bahan bangunan cukup")
+            print("1. logout")
+            print("Untuk keluar dari akun yang digunakan sekarang")
+            print("2. bangun")
+            print("Jin akan membangun candi jika bahan bangunan cukup")
         elif gv.logged_in_role == "jin_pengumpul":
             print("========== HELP ===========")
-            print("1. logout \n Untuk keluar dari akun yang digunakan sekarang")
+            print("1. logout")
+            print("Untuk keluar dari akun yang digunakan sekarang")
+            print("2. kumpul")
             print(
-                "2. kumpul \n Jin pengumpul akan mencari bahan berupa pasir, batu, dan air secara random"
+                "Jin pengumpul akan mencari bahan berupa pasir, batu, dan air secara random"
             )
     else:
         print("=========== HELP ===========")
@@ -742,3 +770,55 @@ def exit():
     # Bila konfirmasi "y"
     if konfirmasi == "y":
         save()
+
+
+def undo():
+    if gv.logged_in_role != "bandung_bondowoso":
+        print("Hanya Bandung Bondowoso yang dapat melakukan undo hilangkan jin.")
+    else:
+        found = False
+        # Mencari jin paling atas dari array undo_jin
+        for i in range(gv.NMaxUser - 1, -1, -1):
+            # Ketemu
+            if gv.undo_jin[i][0] != "":
+                found = True
+                # Save nama jin yang diundo
+                undo_username = gv.undo_jin[i][0]
+
+                # Tambahkan yang mau diundo ke array user
+                for j in range(gv.NMaxUser):
+                    # Mengisi slot kosong dari indeks terkecil
+                    if gv.users[j][0] == "":
+                        gv.users[j] = gv.undo_jin[i]
+                        break
+
+                # Hilangkan jin tersebut dari array undo jin
+                gv.undo_jin[i] = ["", "", ""]
+
+                for j in range(gv.NMaxCandi):
+                    # Mencari semua candi di undo_candi dengan pembanbgun jin username yang sama
+                    if gv.undo_candi[j][1] == undo_username:
+                        # Mengisi slot candi kosong dari indeks terkecil
+                        for k in range(gv.NMaxCandi):
+                            # Ketemu slot kosong
+                            if gv.candi[k][0] == 0:
+                                # Update array candi
+                                gv.candi[k] = [
+                                    k + 1,
+                                    undo_username,
+                                    gv.undo_candi[j][2],
+                                    gv.undo_candi[j][3],
+                                    gv.undo_candi[j][4],
+                                ]
+
+                                # Hilangkan candi dari array undo_candi
+                                gv.undo_candi[j] = [0, "", 0, 0, 0]
+
+                                # Hanya isi sekali
+                                break
+                # Hanya lakukan 1 jin pada array undo_jin
+                break
+        if found:
+            print("Undo hapus jin berhasil dilakukan.")
+        else:
+            print("Anda belum pernah menghapus jin.")

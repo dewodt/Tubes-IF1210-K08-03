@@ -5,7 +5,7 @@ import datetime
 NMaxCandi = 1000
 NMaxUser = 102
 
-# Menyimpan state game
+# Menyimpan informasi user logged in
 logged_in_role = ""
 logged_in_username = ""
 
@@ -20,3 +20,7 @@ bahan_bangunan = [
     ["", "", 0],
     ["", "", 0],
 ]
+
+# Inisialisasi stack undo
+undo_jin = [["", "", ""] for i in range(NMaxUser)]
+undo_candi = [[0, "", 0, 0, 0] for i in range(NMaxCandi)]
