@@ -38,6 +38,8 @@ def run(masukan: str):
         help()
     elif masukan == "exit":
         exit()
+    elif masukan == "undo":
+        undo()
 
 
 def login():
@@ -188,24 +190,33 @@ def hapusjin():
     # Bila ditemukan
     if found:
         konfirmasi = input(
-            "Apakah anda yakin ingin menghapus jin dengan username Jin1 (Y/N)? "
+            f"Apakah anda yakin ingin menghapus jin dengan username {username} (Y/N)? "
         )
         if konfirmasi == "Y":
-            # Hapus data jin
-            gv.users[index_found][0] = ""
-            gv.users[index_found][1] = ""
-            gv.users[index_found][2] = ""
+            # Cari index kosong terkecil pada array undo_jin
+            index_undo = -1
+            for j in range(gv.NMaxUser):
+                if gv.undo_jin[j][0] == "":
+                    index_undo = j
+                    break
+
+            # Update array undo jin
+            gv.undo_jin[index_undo] = gv.users[index_found]
+
+            # Update array user
+            gv.users[index_found] = ["", "", ""]
             print("Jin telah berhasil dihapus dari alam gaib.")
 
             # Hapus data candi yang dibuat oleh jin tersebut
             for i in range(gv.NMaxCandi):
                 # Jika candi dibuat oleh jin tersebut
                 if gv.candi[i][1] == username:
-                    gv.candi[i][0] = 0
-                    gv.candi[i][1] = ""
-                    gv.candi[i][2] = 0
-                    gv.candi[i][3] = 0
-                    gv.candi[i][4] = 0
+                    # Update array undo candi
+                    gv.undo_candi[i] = gv.candi[i]
+
+                    # Update array candi
+                    gv.candi[i] = [0, "", 0, 0, 0]
+
     else:  # Bila tak ditemukan
         print("Tidak ada jin dengan username tersebut.")
 
@@ -682,6 +693,10 @@ def save():
     ut.write_csv(folder_save, "bahan_bangunan.csv")
     print(f"Berhasil menyimpan data di folder save/{folder_save}!")
 
+    # Reset undo array
+    gv.undo_jin = [["", "", ""] for i in range(gv.NMaxUser)]
+    gv.undo_candi = [[0, "", 0, 0, 0] for i in range(gv.NMaxCandi)]
+
 
 def help():  # (kondisi login, username yang masuk)
     if gv.logged_in_username != "":
@@ -742,3 +757,55 @@ def exit():
     # Bila konfirmasi "y"
     if konfirmasi == "y":
         save()
+
+
+def undo():
+    if gv.logged_in_role != "bandung_bondowoso":
+        print("Hanya Bandung Bondowoso yang dapat melakukan undo hilangkan jin.")
+    else:
+        found = False
+        # Mencari jin paling atas dari array undo_jin
+        for i in range(gv.NMaxUser - 1, -1, -1):
+            # Ketemu
+            if gv.undo_jin[i][0] != "":
+                found = True
+                # Save nama jin yang diundo
+                undo_username = gv.undo_jin[i][0]
+
+                # Tambahkan yang mau diundo ke array user
+                for j in range(gv.NMaxUser):
+                    # Mengisi slot kosong dari indeks terkecil
+                    if gv.users[j][0] == "":
+                        gv.users[j] = gv.undo_jin[i]
+                        break
+
+                # Hilangkan jin tersebut dari array undo jin
+                gv.undo_jin[i] = ["", "", ""]
+
+                for j in range(gv.NMaxCandi):
+                    # Mencari semua candi di undo_candi dengan pembanbgun jin username yang sama
+                    if gv.undo_candi[j][1] == undo_username:
+                        # Mengisi slot candi kosong dari indeks terkecil
+                        for k in range(gv.NMaxCandi):
+                            # Ketemu slot kosong
+                            if gv.candi[k][0] == 0:
+                                # Update array candi
+                                gv.candi[k] = [
+                                    k + 1,
+                                    undo_username,
+                                    gv.undo_candi[j][2],
+                                    gv.undo_candi[j][3],
+                                    gv.undo_candi[j][4],
+                                ]
+
+                                # Hilangkan candi dari array undo_candi
+                                gv.undo_candi[j] = [0, "", 0, 0, 0]
+
+                                # Hanya isi sekali
+                                break
+                # Hanya lakukan 1 jin pada array undo_jin
+                break
+        if found:
+            print("Undo hapus jin berhasil dilakukan.")
+        else:
+            print("Anda belum pernah menghapus jin.")
