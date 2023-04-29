@@ -691,7 +691,7 @@ def save():
 
     # Jika directory save/<nama_folder> tidak ada
     if not os.path.exists(f"save/{folder_save}"):
-        print("Membuat folder save/17-03-2023...")
+        print(f"Membuat folder save/{folder_save}...")
         os.mkdir(f"save/{folder_save}")
 
     # Write file
