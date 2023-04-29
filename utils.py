@@ -1,4 +1,5 @@
 import globalvar as gv
+import math
 
 
 # Menerima range min, max, dan seed dan mengembalikan 3 bilangan random
@@ -8,7 +9,7 @@ def RandomLCG(min: int, max: int, seed: int) -> list[int]:
     gv.xn = (a * seed + c) % m
 
     for i in range(3):
-        normalized_value = int(min + (max - min + 1) * (gv.xn / m))
+        normalized_value = math.floor(min + (max - min + 1) * (gv.xn / m))
         random_array[i] = normalized_value
         gv.xn = (a * gv.xn + c) % m
 
