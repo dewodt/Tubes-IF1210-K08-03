@@ -100,6 +100,7 @@ def logout():
     else:
         # Update global variable menjadi kosong
         gv.logged_in_username = ""
+        gv.logged_in_role = ""
 
 
 def summonjin():
