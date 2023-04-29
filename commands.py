@@ -241,7 +241,7 @@ def ubahjin():
                 index_found = i
                 break
 
-        # Jika ketemu
+        # Jika tidak ketemu
         if not found:
             print("Tidak ada jin dengan username tersebut.")
         else:
@@ -347,26 +347,26 @@ def batchbangun():
             if gv.users[i][2] == "jin_pembangun":
                 init_count_jin_pembangun += 1
 
-        # Jika ada jin pembangun tersummon
+        # Jika tidak ada jin pembangun tersummon
         if init_count_jin_pembangun == 0:
             print(
                 "Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu."
             )
         else:
             # Bikin array berisi nama jin pembangun dan generate material yang dipakainya untuk membangun sebuah candi
-            j = 0
             init_array_jin_pembangun = [
                 ["", 0, 0, 0] for i in range(init_count_jin_pembangun)
             ]
 
             # Untuk mengisi nama-nama jin pembangun dan material yang digeneratenya
+            j = 0
             for i in range(gv.NMaxUser):
                 if gv.users[i][2] == "jin_pembangun":
                     # Generate 3 bilangan random number dari 1 sampai 5 untuk pasir, batu, dan air dengan algoritma LCG.
                     gen_pasir, gen_batu, gen_air = ut.RandomLCG(1, 5, gv.xn)
 
                     # Update array jin pembangun
-                    init_array_jin_pembangun = [
+                    init_array_jin_pembangun[j] = [
                         gv.users[i][0],
                         gen_pasir,
                         gen_batu,
