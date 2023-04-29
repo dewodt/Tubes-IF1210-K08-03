@@ -175,7 +175,7 @@ def hapusjin():
     if gv.logged_in_role != "bandung_bondowoso":
         print("summonjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
-    # Inisialisasi input
+        # Inisialisasi input
         found = False
         index_found = -1
         username = input("Masukkan username jin : ")
