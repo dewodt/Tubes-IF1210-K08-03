@@ -173,9 +173,9 @@ def summonjin():
 
 def hapusjin():
     if gv.logged_in_role != "bandung_bondowoso":
-        print("summonjin hanya dapat diakses oleh akun Bandung Bondowoso.")
+        print("hapusjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
-    # Inisialisasi input
+        # Inisialisasi input
         found = False
         index_found = -1
         username = input("Masukkan username jin : ")
@@ -190,7 +190,9 @@ def hapusjin():
                 break
 
         # Bila ditemukan
-        if found:
+        if not found:
+            print("Tidak ada jin dengan username tersebut.")
+        else:
             konfirmasi = input(
                 f"Apakah anda yakin ingin menghapus jin dengan username {username} (Y/N)? "
             )
@@ -219,44 +221,44 @@ def hapusjin():
                         # Update array candi
                         gv.candi[i] = [0, "", 0, 0, 0]
 
-        else:  # Bila tak ditemukan
-            print("Tidak ada jin dengan username tersebut.")
-
 
 def ubahjin():
-    # Inisialisasi input
-    found = False
-    index_found = -1
-    username = input("Masukkan username jin : ")
-
-    # Mengecek bila username ditemukan dan merupakan role jin
-    for i in range(gv.NMaxUser):
-        if gv.users[i][0] == username and (
-            gv.users[i][2] == "jin_pembangun" or gv.users[i][2] == "jin_pengumpul"
-        ):
-            found = True
-            index_found = i
-            break
-
-    # Jika ketemu
-    if found:
-        # Menentukan target ganti
-        tipe_ganti = ""
-        if gv.users[index_found][2] == "jin_pembangun":
-            tipe_ganti = "jin_pengumpul"
-        else:
-            tipe_ganti = "jin_pembangun"
-
-        # Input konfirmasi
-        konfirmasi = input(
-            f'Jin ini bertipe "{gv.users[index_found][2]}". Yakin ingin mengubah ke tipe "{tipe_ganti}" (Y/N)? '
-        )
-
-        # Bila konfirmasi benar
-        if konfirmasi == "Y":
-            gv.users[index_found][2] = tipe_ganti
+    if gv.logged_in_role != "bandung_bondowoso":
+        print("ubahjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
-        print("Tidak ada jin dengan username tersebut.")
+        # Inisialisasi input
+        found = False
+        index_found = -1
+        username = input("Masukkan username jin : ")
+
+        # Mengecek bila username ditemukan dan merupakan role jin
+        for i in range(gv.NMaxUser):
+            if gv.users[i][0] == username and (
+                gv.users[i][2] == "jin_pembangun" or gv.users[i][2] == "jin_pengumpul"
+            ):
+                found = True
+                index_found = i
+                break
+
+        # Jika ketemu
+        if not found:
+            print("Tidak ada jin dengan username tersebut.")
+        else:
+            # Menentukan target ganti
+            tipe_ganti = ""
+            if gv.users[index_found][2] == "jin_pembangun":
+                tipe_ganti = "jin_pengumpul"
+            else:
+                tipe_ganti = "jin_pembangun"
+
+            # Input konfirmasi
+            konfirmasi = input(
+                f'Jin ini bertipe "{gv.users[index_found][2]}". Yakin ingin mengubah ke tipe "{tipe_ganti}" (Y/N)? '
+            )
+
+            # Bila konfirmasi benar
+            if konfirmasi == "Y":
+                gv.users[index_found][2] = tipe_ganti
 
 
 def bangun():
