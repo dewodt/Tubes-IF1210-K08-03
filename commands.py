@@ -100,6 +100,7 @@ def logout():
     else:
         # Update global variable menjadi kosong
         gv.logged_in_username = ""
+        gv.logged_in_role = ""
 
 
 def summonjin():
@@ -172,88 +173,93 @@ def summonjin():
 
 
 def hapusjin():
-    # Inisialisasi input
-    found = False
-    index_found = -1
-    username = input("Masukkan username jin : ")
+    if gv.logged_in_role != "bandung_bondowoso":
+        print("hapusjin hanya dapat diakses oleh akun Bandung Bondowoso.")
+    else:
+        # Inisialisasi input
+        found = False
+        index_found = -1
+        username = input("Masukkan username jin : ")
 
-    # Mengecek bila username ditemukan dan role jin
-    for i in range(gv.NMaxUser):
-        if gv.users[i][0] == username and (
-            gv.users[i][2] == "jin_pembangun" or gv.users[i][2] == "jin_pengumpul"
-        ):
-            found = True
-            index_found = i
-            break
+        # Mengecek bila username ditemukan dan role jin
+        for i in range(gv.NMaxUser):
+            if gv.users[i][0] == username and (
+                gv.users[i][2] == "jin_pembangun" or gv.users[i][2] == "jin_pengumpul"
+            ):
+                found = True
+                index_found = i
+                break
 
-    # Bila ditemukan
-    if found:
-        konfirmasi = input(
-            f"Apakah anda yakin ingin menghapus jin dengan username {username} (Y/N)? "
-        )
-        if konfirmasi == "Y":
-            # Cari index kosong terkecil pada array undo_jin
-            index_undo = -1
-            for j in range(gv.NMaxUser):
-                if gv.undo_jin[j][0] == "":
-                    index_undo = j
-                    break
+        # Bila ditemukan
+        if not found:
+            print("Tidak ada jin dengan username tersebut.")
+        else:
+            konfirmasi = input(
+                f"Apakah anda yakin ingin menghapus jin dengan username {username} (Y/N)? "
+            )
+            if konfirmasi == "Y":
+                # Cari index kosong terkecil pada array undo_jin
+                index_undo = -1
+                for j in range(gv.NMaxUser):
+                    if gv.undo_jin[j][0] == "":
+                        index_undo = j
+                        break
 
-            # Update array undo jin
-            gv.undo_jin[index_undo] = gv.users[index_found]
+                # Update array undo jin
+                gv.undo_jin[index_undo] = gv.users[index_found]
 
-            # Update array user
-            gv.users[index_found] = ["", "", ""]
-            print("Jin telah berhasil dihapus dari alam gaib.")
+                # Update array user
+                gv.users[index_found] = ["", "", ""]
+                print("Jin telah berhasil dihapus dari alam gaib.")
 
-            # Hapus data candi yang dibuat oleh jin tersebut
-            for i in range(gv.NMaxCandi):
-                # Jika candi dibuat oleh jin tersebut
-                if gv.candi[i][1] == username:
-                    # Update array undo candi
-                    gv.undo_candi[i] = gv.candi[i]
+                # Hapus data candi yang dibuat oleh jin tersebut
+                for i in range(gv.NMaxCandi):
+                    # Jika candi dibuat oleh jin tersebut
+                    if gv.candi[i][1] == username:
+                        # Update array undo candi
+                        gv.undo_candi[i] = gv.candi[i]
 
-                    # Update array candi
-                    gv.candi[i] = [0, "", 0, 0, 0]
-
-    else:  # Bila tak ditemukan
-        print("Tidak ada jin dengan username tersebut.")
+                        # Update array candi
+                        gv.candi[i] = [0, "", 0, 0, 0]
 
 
 def ubahjin():
-    # Inisialisasi input
-    found = False
-    index_found = -1
-    username = input("Masukkan username jin : ")
-
-    # Mengecek bila username ditemukan dan merupakan role jin
-    for i in range(gv.NMaxUser):
-        if gv.users[i][0] == username and (
-            gv.users[i][2] == "jin_pembangun" or gv.users[i][2] == "jin_pengumpul"
-        ):
-            found = True
-            index_found = i
-            break
-
-    # Jika ketemu
-    if found:
-        # Menentukan target ganti
-        tipe_ganti = ""
-        if gv.users[index_found][2] == "jin_pembangun":
-            tipe_ganti = "jin_pengumpul"
-        else:
-            tipe_ganti = "jin_pembangun"
-
-        # Input konfirmasi
-        konfirmasi = input(
-            f'Jin ini bertipe "{gv.users[index_found][2]}". Yakin ingin mengubah ke tipe "{tipe_ganti}" (Y/N)? '
-        )
-
-        # Bila konfirmasi benar
-        if konfirmasi == "Y":
-            gv.users[index_found][2] = tipe_ganti
+    if gv.logged_in_role != "bandung_bondowoso":
+        print("ubahjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
-        print("Tidak ada jin dengan username tersebut.")
+        # Inisialisasi input
+        found = False
+        index_found = -1
+        username = input("Masukkan username jin : ")
+
+        # Mengecek bila username ditemukan dan merupakan role jin
+        for i in range(gv.NMaxUser):
+            if gv.users[i][0] == username and (
+                gv.users[i][2] == "jin_pembangun" or gv.users[i][2] == "jin_pengumpul"
+            ):
+                found = True
+                index_found = i
+                break
+
+        # Jika tidak ketemu
+        if not found:
+            print("Tidak ada jin dengan username tersebut.")
+        else:
+            # Menentukan target ganti
+            tipe_ganti = ""
+            if gv.users[index_found][2] == "jin_pembangun":
+                tipe_ganti = "jin_pengumpul"
+            else:
+                tipe_ganti = "jin_pembangun"
+
+            # Input konfirmasi
+            konfirmasi = input(
+                f'Jin ini bertipe "{gv.users[index_found][2]}". Yakin ingin mengubah ke tipe "{tipe_ganti}" (Y/N)? '
+            )
+
+            # Bila konfirmasi benar
+            if konfirmasi == "Y":
+                gv.users[index_found][2] = tipe_ganti
 
 
 def bangun():
@@ -341,26 +347,26 @@ def batchbangun():
             if gv.users[i][2] == "jin_pembangun":
                 init_count_jin_pembangun += 1
 
-        # Jika ada jin pembangun tersummon
+        # Jika tidak ada jin pembangun tersummon
         if init_count_jin_pembangun == 0:
             print(
                 "Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu."
             )
         else:
             # Bikin array berisi nama jin pembangun dan generate material yang dipakainya untuk membangun sebuah candi
-            j = 0
             init_array_jin_pembangun = [
                 ["", 0, 0, 0] for i in range(init_count_jin_pembangun)
             ]
 
             # Untuk mengisi nama-nama jin pembangun dan material yang digeneratenya
+            j = 0
             for i in range(gv.NMaxUser):
                 if gv.users[i][2] == "jin_pembangun":
                     # Generate 3 bilangan random number dari 1 sampai 5 untuk pasir, batu, dan air dengan algoritma LCG.
                     gen_pasir, gen_batu, gen_air = ut.RandomLCG(1, 5, gv.xn)
 
                     # Update array jin pembangun
-                    init_array_jin_pembangun = [
+                    init_array_jin_pembangun[j] = [
                         gv.users[i][0],
                         gen_pasir,
                         gen_batu,
