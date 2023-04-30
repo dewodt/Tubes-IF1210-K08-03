@@ -1,5 +1,4 @@
 import commands as cmd
-import globalvar as gv
 
 # Load CSV
 cmd.load()

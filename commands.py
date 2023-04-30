@@ -717,21 +717,23 @@ def help():  # (kondisi login, username yang masuk)
             print(
                 "Menghapus jin dengan memasukkan username jin. Jika jin terhapus, candi yang dibuat oleh jin juga ikut terhapus"
             )
-            print("4. undo")
+            print("4. ubahjin")
+            print("Mengubah tipe jin dari username jin tertentu")
+            print("5. undo")
             print(
                 "Mengundo jin yang telah anda hapus. Setelah save, memory undo direset."
             )
-            print("5. batchkumpul")
+            print("6. batchkumpul")
             print(
                 "Setelah command dijalankan, jin tipe pengumpul akan mengumpulkan bahan secara random"
             )
-            print("6. batchbangun")
+            print("7. batchbangun")
             print(
                 "Setelah command dijalankan setiap jin akan membangun candi dengan bahan yang di random untuk setiap candi"
             )
-            print("7. laporanjin")
+            print("8. laporanjin")
             print("Mengambil laporan jin untuk mengetahui kinerja para jin")
-            print("8. laporancandi")
+            print("9. laporancandi")
             print(
                 "Mengambil laporan candi mulai dari total candi, ID Candi termahal/termurah, dan jumlah material yang digunakan"
             )
