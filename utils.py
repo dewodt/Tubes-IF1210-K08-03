@@ -5,6 +5,11 @@ import globalvar as gv
 
 # Menerima range min, max, dan seed dan mengembalikan 3 bilangan random
 def RandomLCG(min: int, max: int, seed: int) -> list[int]:
+    # Menghasilkan array yang berisi tiga angka random dalam range [min, max]
+    
+    # Kamus Lokal
+
+    # Algoritma
     random_array = [0, 0, 0]
     a, c, m = 1103515245, 12345, 2**31 - 1
     gv.xn = (a * seed + c) % m
@@ -19,6 +24,11 @@ def RandomLCG(min: int, max: int, seed: int) -> list[int]:
 
 # Read CSV
 def read_csv(folder_name: str, file_name: str):
+    # I.S. data global variable kosong, F.S. data terisi dari data CSV pada folder <folder_name> 
+
+    # Kamus Lokal
+
+    # Algoritma
     # Inisialisasi array sementara untuk concatenate string
     temp_array = []
     if file_name == "user.csv":
@@ -64,6 +74,11 @@ def read_csv(folder_name: str, file_name: str):
 
 # Write CSV
 def write_csv(folder_name: str, file_name: str):
+    # I.S. Data terbaru belum tertulis di file CSV, F.S. Data tertulis di CSV 
+
+    # Kamus Lokal
+
+    # Algoritma
     message = ""
     # Menuliskan array user menjadi string
     if file_name == "user.csv":

@@ -6,6 +6,11 @@ import utils as ut
 
 
 def run(masukan: str):
+    # I.S. program utama belum jalan, F.S. program utama jalan
+
+    # Kamus Lokal
+
+    # Algoritma
     if masukan == "login":
         login()
     elif masukan == "logout":
@@ -43,6 +48,11 @@ def run(masukan: str):
 
 
 def login():
+    # I.S. tidak terlogin, F.S. jika username dan password benar terlogin, jika tidak tidak terlogin
+
+    # Kamus Lokal
+
+    # Algoritma
     if gv.logged_in_username != "":
         print("Login gagal!")
         print(
@@ -91,6 +101,11 @@ def login():
 
 
 def logout():
+    # I.S. terlogin ke suatu akun, F.S. keluar dari akun tersebut
+
+    # Kamus Lokal
+
+    # Algoritma
     if gv.logged_in_username == "":
         # Cetak pesan
         print("Logout gagal!")
@@ -104,6 +119,11 @@ def logout():
 
 
 def summonjin():
+    # I.S. suatu jin belum tersummon, F.S. jin dengan username dan role tertentu tersummon
+
+    # Kamus Lokal
+
+    # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
         print("summonjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
@@ -173,6 +193,11 @@ def summonjin():
 
 
 def hapusjin():
+    # I.S. suatu jin dgn username tertentu masih ada (tersummon), F.S. jin tersebut dimusnahkan
+
+    # Kamus Lokal
+
+    # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
         print("hapusjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
@@ -224,6 +249,11 @@ def hapusjin():
 
 
 def ubahjin():
+    # I.S. suatu jin dengan role jin_pembangun atau jin_pengumpul, F.S. role jin diubah menjadi lawannya
+
+    # Kamus Lokal
+
+    # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
         print("ubahjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
@@ -263,6 +293,11 @@ def ubahjin():
 
 
 def bangun():
+    # I.S. material tersedia atau kosong, F.S. jin terbangun dan material berkurang
+
+    # Kamus Lokal
+
+    # Algoritma
     # Kasus role logged in bukan jin pembangun
     if gv.logged_in_role != "jin_pembangun":
         print("bangun hanya dapat diakses oleh akun Jin Pembangun.")
@@ -306,6 +341,11 @@ def bangun():
 
 
 def kumpul():
+    # I.S. material tersedia atau kosong, F.S. jumlah material bertambah
+
+    # Kamus Lokal
+
+    # Algoritma
     # Kasus role logged in bukan jin pengumpul
     if gv.logged_in_role != "jin_pengumpul":
         print("Kumpul hanya dapat diakses oleh akun Jin Pengumpul.")
@@ -323,6 +363,11 @@ def kumpul():
 
 
 def batchbangun():
+    # I.S. material tersedia atau kosong, F.S. jin terbangun dan material berkurang
+
+    # Kamus Lokal
+
+    # Algoritma
     # Kasus role logged in bukan bandung bondowoso
     if gv.logged_in_role != "bandung_bondowoso":
         print("Batch bangun hanya dapat diakses oleh akun Bandung Bondowoso.")
@@ -438,6 +483,11 @@ def batchbangun():
 
 
 def batchkumpul():
+    # I.S. material tersedia atau kosong, F.S. jumlah material bertambah
+
+    # Kamus Lokal
+
+    # Algoritma
     # Kasus role logged in bukan bandung bondowoso
     if gv.logged_in_role != "bandung_bondowoso":
         print("Batch kumpul hanya dapat diakses oleh akun Bandung Bondowoso.")
@@ -483,6 +533,11 @@ def batchkumpul():
 
 
 def laporanjin():
+    # I.S. beberapa candi terbangun / beberapa material terkumpul, F.S. menampilkan laporan jin terajin dan termalas
+
+    # Kamus Lokal
+
+    # Algoritma
     # Kasus role logged in bukan bandung bondowoso
     if gv.logged_in_role != "bandung_bondowoso":
         print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso.")
@@ -548,6 +603,11 @@ def laporanjin():
 
 
 def laporancandi():
+    # I.S. beberapa candi terbangun / beberapa material terkumpul, F.S. menampilkan laporan pembangunan candi
+
+    # Kamus Lokal
+
+    # Algoritma
     # Kasus role logged in bukan bandung bondowoso
     if gv.logged_in_role != "bandung_bondowoso":
         print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso.")
@@ -600,6 +660,11 @@ def laporancandi():
 
 
 def hancurkancandi():
+    # I.S. beberapa candi dengan id tertentu sudah terbangun, F.S. candi dengan id tertentu dihancurkan
+
+    # Kamus Lokal
+
+    # Algoritma
     if gv.logged_in_role != "roro_jonggrang":
         print("Hancurkan candi hanya dapat diakses oleh akun Roro Jonggrang.")
     else:
@@ -630,6 +695,11 @@ def hancurkancandi():
 
 
 def ayamberkokok():
+    # I.S. beberapa candi sudah terbangun atau bahkan belum, F.S. game selesai dan ditentukan pemenang antara bandung bondowoso atau roro jonggrang
+
+    # Kamus Lokal
+
+    # Algoritma
     if gv.logged_in_role != "roro_jonggrang":
         print("Ayam berkokok hanya dapat diakses oleh akun Roro Jonggrang.")
     else:
@@ -651,6 +721,11 @@ def ayamberkokok():
 
 
 def load():
+    # I.S. data-data CSV belum dibaca atau belum disimpan dalam program, F.S. data-data CSV terbaca dan disimpan dalam program
+
+    # Kamus Lokal
+
+    # Algoritma
     # Argparse untuk menerima nama folder
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -681,6 +756,11 @@ def load():
 
 
 def save():
+    # I.S. data-data game belum tersimpan, F.S. data-data game tersimpan
+
+    # Kamus Lokal
+
+    # Algoritma
     folder_save = input("Masukkan nama folder: ")
     print("Saving...")
 
@@ -705,7 +785,12 @@ def save():
     gv.undo_candi = [[0, "", 0, 0, 0] for i in range(gv.NMaxCandi)]
 
 
-def help():  # (kondisi login, username yang masuk)
+def help():
+    # I.S. player melakukan login atau belum melakukan login, F.S. memberikan list command sesuai dengan role player atau kondisi login player
+
+    # Kamus Lokal
+
+    # Algoritma
     if gv.logged_in_username != "":
         if gv.logged_in_role == "bandung_bondowoso":
             print("=========== HELP ===========")
@@ -766,6 +851,11 @@ def help():  # (kondisi login, username yang masuk)
 
 
 def exit():
+    # I.S. player dalam kondisi login atau belum melakukan login, F.S. memberikan opsi pada player untuk menyimpan data program sebelum keluar dari program
+
+    # Kamus Lokal
+
+    # Algoritma
     # Input dan Validasi Konfirmasi
     konfirmasi = input(
         "Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) "
@@ -781,6 +871,11 @@ def exit():
 
 
 def undo():
+    # I.S. data user atau candi yang sudah dihapus, F.S. mengembalikan data yang telah dihapus sebelumnya 
+
+    # Kamus Lokal
+
+    # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
         print("Hanya Bandung Bondowoso yang dapat melakukan undo hilangkan jin.")
     else:

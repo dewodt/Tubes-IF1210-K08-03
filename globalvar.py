@@ -1,5 +1,11 @@
 import datetime
 
+# Modul Global Variable
+# Modul untuk tempat menyimapnnya variable-variabel global
+
+# Kamus
+
+# Algoritma
 # Inisialisasi Global Variable
 # Jumlah anggota array maksimum
 NMaxCandi = 1000
