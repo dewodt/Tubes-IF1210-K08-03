@@ -87,8 +87,8 @@ def login():
     # Kamus Lokal
     # type User: array [0..NMaxUser] of array [0..2] of string
     # username, password : string
-	# username_found, password_valid : bool
-	# i : int
+    # username_found, password_valid : bool
+    # i : int
 
     # Algoritma
     if gv.logged_in_username != "":
@@ -163,8 +163,8 @@ def summonjin():
     # Kamus Lokal
     # type User: array [0..NMaxUser] of array [0..2] of string
     # jenis_jin, kode_jenis_jin, username, password : string
-	# tersedia : bool
-	# count_summoned_jin, i : int
+    # tersedia : bool
+    # count_summoned_jin, i : int
 
     # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
@@ -240,10 +240,10 @@ def hapusjin():
 
     # Kamus Lokal
     # type User: array [0..NMaxUser] of array [0..2] of string
-	# type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
     # username, konfirmasi : string
-	# found : bool
-	# index_found, index_undo, i, j : int
+    # found : bool
+    # index_found, index_undo, i, j : int
 
     # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
@@ -302,8 +302,8 @@ def ubahjin():
     # Kamus Lokal
     # type User: array [0..NMaxUser] of array [0..2] of string
     # username, tipe_ganti, konfirmasi : string
-	# found : bool
-	# index_found, i : int
+    # found : bool
+    # index_found, i : int
 
     # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
@@ -349,11 +349,11 @@ def bangun():
 
     # Kamus Lokal
     # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
-	# type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
     # init_jin : string
-	# init_pasir, init_batu, init_air, init_count_candi, i, gen_pasir, gen_batu, gen_air : int
-	# function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
-	# { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
+    # init_pasir, init_batu, init_air, init_count_candi, i, gen_pasir, gen_batu, gen_air : int
+    # function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
+    # { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
 
     # Algoritma
     # Kasus role logged in bukan jin pembangun
@@ -404,8 +404,8 @@ def kumpul():
     # Kamus Lokal
     # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
     # gen_pasir, gen_batu, gen_air : int
-	# function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
-	# { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
+    # function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
+    # { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
 
     # Algoritma
     # Kasus role logged in bukan jin pengumpul
@@ -429,12 +429,12 @@ def batchbangun():
 
     # Kamus Lokal
     # type User: array [0..NMaxUser] of array [0..2] of string
-	# type Candi: array [0..NMaxCandi] of array [0..4] of string, int
-	# type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
     # init_pasir, init_batu, init_air, batch_pasir, batch_batu, batch_air, init_count_candi, init_count_jin_pembangun, i, j, gen_pasir, gen_batu, gen_air, count_terbangun, kurang_pasir, kurang_batu, kurang_air : int
     # init_aray_jin_pembangung : array [0..init_count_jin_pembangun-1] of array [0..3] of int, string
-	# function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
-	# { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
+    # function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
+    # { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
 
     # Algoritma
     # Kasus role logged in bukan bandung bondowoso
@@ -556,10 +556,10 @@ def batchkumpul():
 
     # Kamus Lokal
     # type User: array [0..NMaxUser] of array [0..2] of string
-	# type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
     # batch_pasir, batch_batu, batch_air, init_count_jin_pengumpul, i, gen_pasir, gen_batu, gen_air : int
-	# function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
-	# { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
+    # function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
+    # { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
 
     # Algoritma
     # Kasus role logged in bukan bandung bondowoso
@@ -611,10 +611,10 @@ def laporanjin():
 
     # Kamus Lokal
     # type User: array [0..NMaxUser] of array [0..2] of string
-	# type Candi: array [0..NMaxCandi] of array [0..4] of string, int
-	# type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
     # jin_total, jin_pembangun, jin_pengumpul, i, count_terajin, count_termalas, count_now, j, pasir_now, batu_now, air_now : int
-	# nama_terajin, nama_termalas, nama_now : string
+    # nama_terajin, nama_termalas, nama_now : string
 
     # Algoritma
     # Kasus role logged in bukan bandung bondowoso
@@ -687,7 +687,7 @@ def laporancandi():
     # Kamus Lokal
     # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
     # total_candi, total_pasir, total_batu, total_air, harga_termahal, harga_termurah, i, harga_now: int
-	# id_termahal, id_termurah, id_now: string
+    # id_termahal, id_termurah, id_now: string
 
     # Algoritma
     # Kasus role logged in bukan bandung bondowoso
@@ -747,7 +747,7 @@ def hancurkancandi():
     # Kamus Lokal
     # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
     # candi_found : bool
-	# id_hancurkan, konfirmasi: string
+    # id_hancurkan, konfirmasi: string
 
     # Algoritma
     if gv.logged_in_role != "roro_jonggrang":
@@ -812,10 +812,10 @@ def load():
 
     # Kamus Lokal
     # parser : ArgumentParser
-	# args : NameSpace
-	# folder_load : string
+    # args : NameSpace
+    # folder_load : string
     # procedure read_csv(output folder_name : string, output file_name : string, output NMaxCandi: int, output NMaxUser: int, input/output users: User, input/output bahan_bangunan: Bahan_Bangunan, input/output candi: Candi)
-	# { I.S. data global variable kosong, F.S. data terisi dari data CSV pada folder <folder_name>}
+    # { I.S. data global variable kosong, F.S. data terisi dari data CSV pada folder <folder_name>}
 
     # Algoritma
     # Argparse untuk menerima nama folder
@@ -852,10 +852,10 @@ def save():
 
     # Kamus Lokal
     # type User: array [0..NMaxUser] of array [0..2] of string
-	# type Candi: array [0..NMaxCandi] of array [0..4] of string, int
-	# folder_save: string
-	# procedure write_csv(output folder_name : string, output file_name : string, output NMaxCandi: int, output NMaxUser: int, input/output users: User, input/output bahan_bangunan: Bahan_Bangunan, input/output candi: Candi)
-	# { I.S. Data terbaru belum tertulis di file CSV, F.S. Data tertulis di CSV }
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # folder_save: string
+    # procedure write_csv(output folder_name : string, output file_name : string, output NMaxCandi: int, output NMaxUser: int, input/output users: User, input/output bahan_bangunan: Bahan_Bangunan, input/output candi: Candi)
+    # { I.S. Data terbaru belum tertulis di file CSV, F.S. Data tertulis di CSV }
 
     # Algoritma
     folder_save = input("Masukkan nama folder: ")
@@ -972,14 +972,14 @@ def exit():
 
 
 def undo():
-    # I.S. data user atau candi yang sudah dihapus, F.S. mengembalikan data yang telah dihapus sebelumnya 
+    # I.S. data user atau candi yang sudah dihapus, F.S. mengembalikan data yang telah dihapus sebelumnya
 
     # Kamus Lokal
     # type User: array [0..NMaxUser] of array [0..2] of string
-	# type Candi: array [0..NMaxCandi] of array [0..4] of string, integer
-	# konfirmasi, undo_username : string
-	# found, ketemu_kosong_1, ketemu_kosong_2, ketemu_kosong_3 : boolean
-	# i, j, k : integer
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, integer
+    # konfirmasi, undo_username : string
+    # found, ketemu_kosong_1, ketemu_kosong_2, ketemu_kosong_3 : boolean
+    # i, j, k : integer
 
     # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
