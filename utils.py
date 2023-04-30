@@ -1,5 +1,6 @@
-import globalvar as gv
 import math
+
+import globalvar as gv
 
 
 # Menerima range min, max, dan seed dan mengembalikan 3 bilangan random
