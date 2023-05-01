@@ -1,5 +1,21 @@
 import datetime
 
+# Modul Global Variable
+# Modul untuk tempat menyimapnnya variable-variabel global
+
+# Kamus
+# NMaxCandi, NMaxUser, xn: int
+# logged_in_role, logged_in_username: string
+# type User: array [0..NMaxUser] of array [0..2] of string
+# type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+# type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+# users: User
+# candi: Candi
+# bahan_bangunan: Bahan_Bangunan
+# undo_jin: User
+# undo_candi: Candi
+
+# Algoritma
 # Inisialisasi Global Variable
 # Jumlah anggota array maksimum
 NMaxCandi = 1000

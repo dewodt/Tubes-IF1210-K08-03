@@ -1,14 +1,23 @@
+import math
+
 import globalvar as gv
 
 
 # Menerima range min, max, dan seed dan mengembalikan 3 bilangan random
 def RandomLCG(min: int, max: int, seed: int) -> list[int]:
+    # Menghasilkan array yang berisi tiga angka random dalam range [min, max]
+
+    # Kamus Lokal
+    # random_array: array [0..2] of int
+    # a, c, m, normalized_value: int
+
+    # Algoritma
     random_array = [0, 0, 0]
     a, c, m = 1103515245, 12345, 2**31 - 1
     gv.xn = (a * seed + c) % m
 
     for i in range(3):
-        normalized_value = int(min + (max - min + 1) * (gv.xn / m))
+        normalized_value = math.floor(min + (max - min + 1) * (gv.xn / m))
         random_array[i] = normalized_value
         gv.xn = (a * gv.xn + c) % m
 
@@ -17,6 +26,22 @@ def RandomLCG(min: int, max: int, seed: int) -> list[int]:
 
 # Read CSV
 def read_csv(folder_name: str, file_name: str):
+    # I.S. data global variable kosong, F.S. data terisi dari data CSV pada folder <folder_name>
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # temp_array: array [0..NRow] of array [0.. NCol] of string
+    # { Untuk user.csv, NRow = NMaxUser-1 dan NCol = 2 }
+    # { Untuk bahan_bangunan.csv, NRow = 2 dan NCol = 2 }
+    # { Untuk candi.csv, NRow = NMaxCandi-1 dan NCol = 4 }
+    # file : SEQFILE of
+    # (*) cc : character
+    # (1) “” { Empty }
+    # i, kolom : int
+
+    # Algoritma
     # Inisialisasi array sementara untuk concatenate string
     temp_array = []
     if file_name == "user.csv":
@@ -62,6 +87,19 @@ def read_csv(folder_name: str, file_name: str):
 
 # Write CSV
 def write_csv(folder_name: str, file_name: str):
+    # I.S. Data terbaru belum tertulis di file CSV, F.S. Data tertulis di CSV
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # file : SEQFILE of
+    # (*) cc : character
+    # (1) “” { Empty }
+    # i, j : int
+    # message: string
+
+    # Algoritma
     message = ""
     # Menuliskan array user menjadi string
     if file_name == "user.csv":

@@ -6,6 +6,45 @@ import utils as ut
 
 
 def run(masukan: str):
+    # I.S. program utama belum jalan, F.S. program utama jalan
+
+    # Kamus Lokal
+    # procedure login (input/output logged_in_username: string, input/output logged_in_role: string, output NMaxUser: int, input/output users: User)
+    # { I.S. tidak terlogin, F.S. jika username dan password benar terlogin, jika tidak tidak terlogin }
+    # procedure logout (input/output logged_in_username: string, input/output logged_in_role: string)
+    # { I.S. terlogin ke suatu akun, F.S. keluar dari akun tersebut}
+    # procedure summonjin (output logged_in_role: string, output NMaxUser: int, input/output users: User)
+    # { I.S. suatu jin belum tersummon, F.S. jin dengan username dan role tertentu tersummon }
+    # procedure hapusjin (output logged_in_role: string, output NMaxUser: int, output NMaxCandi: int, input/output users: User, input/output candi: Candi, input/output undo_jin: User, input/output undo_candi: Candi)
+    # { I.S. suatu jin dgn username tertentu masih ada (tersummon), F.S. jin tersebut dimusnahkan }
+    # procedure ubahjin (output logged_in_role: string, output NMaxUser: int, input/output users: User)
+    # { I.S. suatu jin dengan role jin_pembangun atau jin_pengumpul, F.S. role jin diubah menjadi lawannya}
+    # procedure bangun(output logged_in_role: string, output logged_in_username: string, input/output bahan_bangunan: Bahan_Bangunan, input/output candi: Candi, output NMaxCandi: int, output xn: int)
+    # { I.S. material tersedia atau kosong, F.S. jin terbangun dan material berkurang }
+    # procedure kumpul (output logged_in_role: string, input/output bahan_bangunan: Bahan_Bangunan, output xn: int)
+    # { I.S. material tersedia atau kosong, F.S. jumlah material bertambah }
+    # procedure batchbangun(output logged_in_role: string, output NMaxUser: int, output NMaxCandi: int, output xn: int, output users: User, input/output bahan_bangunan: Bahan_Bangunan, input/output candi: Candi)
+    # { I.S. material tersedia atau kosong, F.S. jin terbangun dan material berkurang }
+    # procedure batchkumpul(output logged_in_role: string, output NMaxUser: int, output xn: int, output users: User, input/output bahan_bangunan: Bahan_Bangunan)
+    # { I.S. material tersedia atau kosong, F.S. jumlah material bertambah }
+    # procedure laporanjin(output logged_in_role: string, output NMaxCandi: int, output NMaxUser: int, output users: User, output candi: Candi, output bahan_bangunan: Bahan_Bangunan)
+    # { I.S. beberapa candi terbangun / beberapa material terkumpul, F.S. menampilkan laporan jin terajin dan termalas }
+    # procedure laporancandi(output logged_in_role: string, output NMaxCandi: int, output candi: Candi)
+    # { I.S. beberapa candi terbangun / beberapa material terkumpul, F.S. menampilkan laporan pembangunan candi }
+    # procedure hancurkancandi(output logged_in_role: string, output NMaxCandi: int, input/output candi: Candi)
+    # { I.S. beberapa candi dengan id tertentu sudah terbangun, F.S. candi dengan id tertentu dihancurkan }
+    # procedure ayamberkokok (output logged_in_role: string, output NMaxCandi: int, output candi: Candi)
+    # { I.S. beberapa candi sudah terbangun atau bahkan belum, F.S. game selesai dan ditentukan pemenang antara bandung bondowoso atau roro jonggrang }
+    # procedure save (input/output undo_jin: User, input/output undo_candi: Candi)
+    # { I.S. data-data game belum tersimpan, F.S. data-data game tersimpan }
+    # procedure help (output logged_in_username: string, output logged_in_role: string)
+    # { I.S. player melakukan login atau belum melakukan login, F.S. memberikan list command sesuai dengan role player atau kondisi login player }
+    # procedure exit ()
+    # { I.S. player dalam kondisi login atau belum melakukan login, F.S. memberikan opsi pada player untuk menyimpan data program sebelum keluar dari program }
+    # procedure undo(output logged_in_role: string, output NMaxUser: int, input/output undo_jin: User, input/output undo_candi: Candi, input/output candi: Candi)
+    # { I.S. data user atau candi yang sudah dihapus, F.S. mengembalikan data yang telah dihapus sebelumnya }
+
+    # Algoritma
     if masukan == "login":
         login()
     elif masukan == "logout":
@@ -43,6 +82,15 @@ def run(masukan: str):
 
 
 def login():
+    # I.S. tidak terlogin, F.S. jika username dan password benar terlogin, jika tidak tidak terlogin
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # username, password : string
+    # username_found, password_valid : bool
+    # i : int
+
+    # Algoritma
     if gv.logged_in_username != "":
         print("Login gagal!")
         print(
@@ -91,6 +139,12 @@ def login():
 
 
 def logout():
+    # I.S. terlogin ke suatu akun, F.S. keluar dari akun tersebut
+
+    # Kamus Lokal
+    # Kosong
+
+    # Algoritma
     if gv.logged_in_username == "":
         # Cetak pesan
         print("Logout gagal!")
@@ -104,6 +158,15 @@ def logout():
 
 
 def summonjin():
+    # I.S. suatu jin belum tersummon, F.S. jin dengan username dan role tertentu tersummon
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # jenis_jin, kode_jenis_jin, username, password : string
+    # tersedia : bool
+    # count_summoned_jin, i : int
+
+    # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
         print("summonjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
@@ -173,6 +236,16 @@ def summonjin():
 
 
 def hapusjin():
+    # I.S. suatu jin dgn username tertentu masih ada (tersummon), F.S. jin tersebut dimusnahkan
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # username, konfirmasi : string
+    # found : bool
+    # index_found, index_undo, i, j : int
+
+    # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
         print("hapusjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
@@ -224,6 +297,15 @@ def hapusjin():
 
 
 def ubahjin():
+    # I.S. suatu jin dengan role jin_pembangun atau jin_pengumpul, F.S. role jin diubah menjadi lawannya
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # username, tipe_ganti, konfirmasi : string
+    # found : bool
+    # index_found, i : int
+
+    # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
         print("ubahjin hanya dapat diakses oleh akun Bandung Bondowoso.")
     else:
@@ -263,6 +345,17 @@ def ubahjin():
 
 
 def bangun():
+    # I.S. material tersedia atau kosong, F.S. jin terbangun dan material berkurang
+
+    # Kamus Lokal
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # init_jin : string
+    # init_pasir, init_batu, init_air, init_count_candi, i, gen_pasir, gen_batu, gen_air : int
+    # function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
+    # { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
+
+    # Algoritma
     # Kasus role logged in bukan jin pembangun
     if gv.logged_in_role != "jin_pembangun":
         print("bangun hanya dapat diakses oleh akun Jin Pembangun.")
@@ -306,6 +399,15 @@ def bangun():
 
 
 def kumpul():
+    # I.S. material tersedia atau kosong, F.S. jumlah material bertambah
+
+    # Kamus Lokal
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # gen_pasir, gen_batu, gen_air : int
+    # function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
+    # { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
+
+    # Algoritma
     # Kasus role logged in bukan jin pengumpul
     if gv.logged_in_role != "jin_pengumpul":
         print("Kumpul hanya dapat diakses oleh akun Jin Pengumpul.")
@@ -323,6 +425,18 @@ def kumpul():
 
 
 def batchbangun():
+    # I.S. material tersedia atau kosong, F.S. jin terbangun dan material berkurang
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # init_pasir, init_batu, init_air, batch_pasir, batch_batu, batch_air, init_count_candi, init_count_jin_pembangun, i, j, gen_pasir, gen_batu, gen_air, count_terbangun, kurang_pasir, kurang_batu, kurang_air : int
+    # init_aray_jin_pembangung : array [0..init_count_jin_pembangun-1] of array [0..3] of int, string
+    # function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
+    # { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
+
+    # Algoritma
     # Kasus role logged in bukan bandung bondowoso
     if gv.logged_in_role != "bandung_bondowoso":
         print("Batch bangun hanya dapat diakses oleh akun Bandung Bondowoso.")
@@ -438,6 +552,16 @@ def batchbangun():
 
 
 def batchkumpul():
+    # I.S. material tersedia atau kosong, F.S. jumlah material bertambah
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # batch_pasir, batch_batu, batch_air, init_count_jin_pengumpul, i, gen_pasir, gen_batu, gen_air : int
+    # function RandomLCG (min: int, max: int, seed: int) → array [0..2] of int
+    # { Menghasilkan array yang berisi tiga angka random dalam range [min, max] }
+
+    # Algoritma
     # Kasus role logged in bukan bandung bondowoso
     if gv.logged_in_role != "bandung_bondowoso":
         print("Batch kumpul hanya dapat diakses oleh akun Bandung Bondowoso.")
@@ -483,6 +607,16 @@ def batchkumpul():
 
 
 def laporanjin():
+    # I.S. beberapa candi terbangun / beberapa material terkumpul, F.S. menampilkan laporan jin terajin dan termalas
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # type Bahan_Bangunan: array [0..2] of array [0..2] of string, int
+    # jin_total, jin_pembangun, jin_pengumpul, i, count_terajin, count_termalas, count_now, j, pasir_now, batu_now, air_now : int
+    # nama_terajin, nama_termalas, nama_now : string
+
+    # Algoritma
     # Kasus role logged in bukan bandung bondowoso
     if gv.logged_in_role != "bandung_bondowoso":
         print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso.")
@@ -548,6 +682,14 @@ def laporanjin():
 
 
 def laporancandi():
+    # I.S. beberapa candi terbangun / beberapa material terkumpul, F.S. menampilkan laporan pembangunan candi
+
+    # Kamus Lokal
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # total_candi, total_pasir, total_batu, total_air, harga_termahal, harga_termurah, i, harga_now: int
+    # id_termahal, id_termurah, id_now: string
+
+    # Algoritma
     # Kasus role logged in bukan bandung bondowoso
     if gv.logged_in_role != "bandung_bondowoso":
         print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso.")
@@ -600,6 +742,14 @@ def laporancandi():
 
 
 def hancurkancandi():
+    # I.S. beberapa candi dengan id tertentu sudah terbangun, F.S. candi dengan id tertentu dihancurkan
+
+    # Kamus Lokal
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # candi_found : bool
+    # id_hancurkan, konfirmasi: string
+
+    # Algoritma
     if gv.logged_in_role != "roro_jonggrang":
         print("Hancurkan candi hanya dapat diakses oleh akun Roro Jonggrang.")
     else:
@@ -630,6 +780,13 @@ def hancurkancandi():
 
 
 def ayamberkokok():
+    # I.S. beberapa candi sudah terbangun atau bahkan belum, F.S. game selesai dan ditentukan pemenang antara bandung bondowoso atau roro jonggrang
+
+    # Kamus Lokal
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # count_candi, i : integer
+
+    # Algoritma
     if gv.logged_in_role != "roro_jonggrang":
         print("Ayam berkokok hanya dapat diakses oleh akun Roro Jonggrang.")
     else:
@@ -651,6 +808,16 @@ def ayamberkokok():
 
 
 def load():
+    # I.S. data-data CSV belum dibaca atau belum disimpan dalam program, F.S. data-data CSV terbaca dan disimpan dalam program
+
+    # Kamus Lokal
+    # parser : ArgumentParser
+    # args : NameSpace
+    # folder_load : string
+    # procedure read_csv(output folder_name : string, output file_name : string, output NMaxCandi: int, output NMaxUser: int, input/output users: User, input/output bahan_bangunan: Bahan_Bangunan, input/output candi: Candi)
+    # { I.S. data global variable kosong, F.S. data terisi dari data CSV pada folder <folder_name>}
+
+    # Algoritma
     # Argparse untuk menerima nama folder
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -681,6 +848,16 @@ def load():
 
 
 def save():
+    # I.S. data-data game belum tersimpan, F.S. data-data game tersimpan
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, int
+    # folder_save: string
+    # procedure write_csv(output folder_name : string, output file_name : string, output NMaxCandi: int, output NMaxUser: int, input/output users: User, input/output bahan_bangunan: Bahan_Bangunan, input/output candi: Candi)
+    # { I.S. Data terbaru belum tertulis di file CSV, F.S. Data tertulis di CSV }
+
+    # Algoritma
     folder_save = input("Masukkan nama folder: ")
     print("Saving...")
 
@@ -705,7 +882,13 @@ def save():
     gv.undo_candi = [[0, "", 0, 0, 0] for i in range(gv.NMaxCandi)]
 
 
-def help():  # (kondisi login, username yang masuk)
+def help():
+    # I.S. player melakukan login atau belum melakukan login, F.S. memberikan list command sesuai dengan role player atau kondisi login player
+
+    # Kamus Lokal
+    # Kosong
+
+    # Algoritma
     if gv.logged_in_username != "":
         if gv.logged_in_role == "bandung_bondowoso":
             print("=========== HELP ===========")
@@ -717,21 +900,23 @@ def help():  # (kondisi login, username yang masuk)
             print(
                 "Menghapus jin dengan memasukkan username jin. Jika jin terhapus, candi yang dibuat oleh jin juga ikut terhapus"
             )
-            print("4. undo")
+            print("4. ubahjin")
+            print("Mengubah tipe jin dari username jin tertentu")
+            print("5. undo")
             print(
                 "Mengundo jin yang telah anda hapus. Setelah save, memory undo direset."
             )
-            print("5. batchkumpul")
+            print("6. batchkumpul")
             print(
                 "Setelah command dijalankan, jin tipe pengumpul akan mengumpulkan bahan secara random"
             )
-            print("6. batchbangun")
+            print("7. batchbangun")
             print(
                 "Setelah command dijalankan setiap jin akan membangun candi dengan bahan yang di random untuk setiap candi"
             )
-            print("7. laporanjin")
+            print("8. laporanjin")
             print("Mengambil laporan jin untuk mengetahui kinerja para jin")
-            print("8. laporancandi")
+            print("9. laporancandi")
             print(
                 "Mengambil laporan candi mulai dari total candi, ID Candi termahal/termurah, dan jumlah material yang digunakan"
             )
@@ -764,6 +949,14 @@ def help():  # (kondisi login, username yang masuk)
 
 
 def exit():
+    # I.S. player dalam kondisi login atau belum melakukan login, F.S. memberikan opsi pada player untuk menyimpan data program sebelum keluar dari program
+
+    # Kamus Lokal
+    # konfirmasi: string
+    # procedure save (input/output undo_jin: User, input/output undo_candi: Candi)
+    # { I.S. data-data game belum tersimpan, F.S. data-data game tersimpan }
+
+    # Algoritma
     # Input dan Validasi Konfirmasi
     konfirmasi = input(
         "Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) "
@@ -779,6 +972,16 @@ def exit():
 
 
 def undo():
+    # I.S. data user atau candi yang sudah dihapus, F.S. mengembalikan data yang telah dihapus sebelumnya
+
+    # Kamus Lokal
+    # type User: array [0..NMaxUser] of array [0..2] of string
+    # type Candi: array [0..NMaxCandi] of array [0..4] of string, integer
+    # konfirmasi, undo_username : string
+    # found, ketemu_kosong_1, ketemu_kosong_2, ketemu_kosong_3 : boolean
+    # i, j, k : integer
+
+    # Algoritma
     if gv.logged_in_role != "bandung_bondowoso":
         print("Hanya Bandung Bondowoso yang dapat melakukan undo hilangkan jin.")
     else:
